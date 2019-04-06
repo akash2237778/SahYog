@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.parse.ParseAnalytics;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
@@ -21,10 +22,28 @@ public class MainActivity extends AppCompatActivity {
     String userName;
     String password ;
     String reEnterPass;
-    int phoneNo;
+    String phoneNo;
+    ParseUser user;
 
 
+    public void SignUp (String usrnme , String password){
+        user = new ParseUser();
 
+        user.setUsername(usrnme);
+    user.setPassword(password);
+
+    user.signUpInBackground(new SignUpCallback() {
+        @Override
+        public void done(ParseException e) {
+            if( e==null ){
+               Log.i("SignUp ","Successful");
+            }else{
+                Log.i("SignUp ","unSuccessful :" + e.getMessage());
+            }
+        }
+    });
+
+}
 
 
 public void onClickSignUp (View view){
@@ -32,21 +51,23 @@ public void onClickSignUp (View view){
     userName = String.valueOf(userNameText.getText());
     password = String.valueOf(passwordText.getText());
     reEnterPass = String.valueOf(reEnterPassword.getText());
-    phoneNo = Integer.parseInt(String.valueOf(phoneNoText.getText()));
+    phoneNo =String.valueOf(phoneNoText.getText());
 
     if(name == null || userName == null || password == null || reEnterPassword==null /*|| phoneNo == "null" */){
         Toast.makeText(MainActivity.this, "Please fill all the Fields !", Toast.LENGTH_SHORT).show();
 
     }else {
         if (password.equals(reEnterPass)) {
-            Toast.makeText(MainActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+         SignUp(userName,password);
         } else {
             Toast.makeText(MainActivity.this, "Passwords not same !", Toast.LENGTH_SHORT).show();
 
         }
 
     }
+    ParseAnalytics.trackAppOpenedInBackground(getIntent());
 }
+
 
 
     @Override
@@ -61,22 +82,5 @@ public void onClickSignUp (View view){
         phoneNoText = (EditText)findViewById(R.id.phoneNoText);
 
 
-
-
-
-        ParseUser user = new ParseUser();
-        user.setUsername("Akash");
-        user.setPassword("123456");
-
-        user.signUpInBackground(new SignUpCallback() {
-            @Override
-            public void done(ParseException e) {
-                if( e==null ){
-                    Toast.makeText(MainActivity.this, "Successful", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(MainActivity.this, "unSuccessful", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
     }
 }
