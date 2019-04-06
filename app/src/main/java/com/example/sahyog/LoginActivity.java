@@ -1,5 +1,6 @@
 package com.example.sahyog;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +16,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText logInPassText;
     String loginUsrNme;
     String loginPass;
+    Intent MainNavDrawerIntent;
 
     public void OnClickLogin(View view){
         loginUsrNme = logInUsrNmeText.getText().toString();
@@ -25,6 +27,7 @@ public class LoginActivity extends AppCompatActivity {
             public void done(ParseUser user, ParseException e) {
                 if(user != null){
                     Log.i("logIn ", "Successful");
+                    startActivity(MainNavDrawerIntent);
                 }else{
                     Log.i("logIn ", "unSuccessful" + e.getMessage() );
                 }
@@ -40,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
 
         logInUsrNmeText = (EditText) findViewById(R.id.loginUsrNmeText);
         logInPassText = (EditText) findViewById(R.id.logInPassText);
+        MainNavDrawerIntent = new Intent(getApplicationContext(),MainActNavDrawer.class);
 
     }
 }
