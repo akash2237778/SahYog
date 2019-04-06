@@ -1,5 +1,6 @@
 package com.example.sahyog;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     String reEnterPass;
     String phoneNo;
     ParseUser user;
+    Intent loginIntent;
+
 
 
     public void SignUp (String usrnme , String password){
@@ -45,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
 
 }
 
+public  void OnClickAlreadyUser(View view){
+        startActivity(loginIntent);
+}
 
 public void onClickSignUp (View view){
     name = String.valueOf(nameText.getText());
@@ -80,6 +86,9 @@ public void onClickSignUp (View view){
         passwordText = (EditText)findViewById(R.id.passwordText);
         reEnterPassword = (EditText)findViewById(R.id.reEnterPassword);
         phoneNoText = (EditText)findViewById(R.id.phoneNoText);
+
+        loginIntent = new Intent(getApplicationContext(),LoginActivity.class);
+
 
 
     }
