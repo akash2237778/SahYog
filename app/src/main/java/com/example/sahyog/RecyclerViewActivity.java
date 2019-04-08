@@ -16,7 +16,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
         recyclerView = (RecyclerView)findViewById(R.id.RecyclerView);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        String[] names = {"Akash","Ak", "Abcd" , "Uv" ,"Vipul" , "Ajay","Akash","Ak", "Abcd" , "Uv" ,"Vipul" , "Ajay","Akash","Ak", "Abcd" , "Uv" ,"Vipul" , "Ajay"};
+        String[] names = {"Akash","Ak", "Abcd" , "Uv" ,"Vipul" , "Ayush","Akash","Ak", "Abcd" , "Uv" ,"Vipul" , "Ayush","Akash","Ak", "Abcd" , "Uv" ,"Vipul" , "Ayush"};
         recyclerView.setAdapter(new AdapterProgram(names));
 
     }
