@@ -13,6 +13,8 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
+import static java.sql.Types.NULL;
+
 public class MainActivity extends AppCompatActivity {
     EditText nameText;
     EditText userNameText;
@@ -23,17 +25,20 @@ public class MainActivity extends AppCompatActivity {
     String userName;
     String password ;
     String reEnterPass;
-    String phoneNo;
+    int phoneNo;
     ParseUser user;
     Intent loginIntent;
 
 
 
-    public void SignUp (String usrnme , String password){
+    public void SignUp (String name,String usrnme , String password,int phoneNo){
         user = new ParseUser();
 
         user.setUsername(usrnme);
     user.setPassword(password);
+user.put("phone",phoneNo);
+        user.put("name",name);
+
 
     user.signUpInBackground(new SignUpCallback() {
         @Override
@@ -57,14 +62,14 @@ public void onClickSignUp (View view){
     userName = String.valueOf(userNameText.getText());
     password = String.valueOf(passwordText.getText());
     reEnterPass = String.valueOf(reEnterPassword.getText());
-    phoneNo =String.valueOf(phoneNoText.getText());
+    phoneNo =Integer.parseInt(String.valueOf(phoneNoText.getText()));
 
-    if(name == null || userName == null || password == null || reEnterPassword==null || phoneNo == null){
+    if(name == null || userName == null || password == null || reEnterPassword==null || phoneNo == NULL){
         Toast.makeText(MainActivity.this, "Please fill all the Fields !", Toast.LENGTH_SHORT).show();
 
     }else {
         if (password.equals(reEnterPass)) {
-         SignUp(userName,password);
+         SignUp(name,userName,password,phoneNo);
         } else {
             Toast.makeText(MainActivity.this, "Passwords not same !", Toast.LENGTH_SHORT).show();
 
