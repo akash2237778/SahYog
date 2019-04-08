@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RecyclerViewActivity"></activity>
+        <activity android:name=".Services"></activity>
+        <activity android:name=".RecyclerViewActivity" />
         <activity
             android:name=".MainActNavDrawer"
             android:label="@string/title_activity_main_act_nav_drawer"
