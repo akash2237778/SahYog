@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     String phoneNo;
     ParseUser user;
     Intent loginIntent;
+    Intent chngeIntent;
 
 
 
@@ -94,7 +96,15 @@ public void onClickSignUp (View view){
 
         loginIntent = new Intent(getApplicationContext(),LoginActivity.class);
 
+         chngeIntent = new Intent(getApplicationContext(),RecyclerViewActivity.class);
 
 
+
+    }
+
+
+
+    public void OnclickChangeIntent(View view){
+     startActivity(chngeIntent);
     }
 }
