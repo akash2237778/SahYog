@@ -59,7 +59,7 @@ public void onClickSignUp (View view){
     reEnterPass = String.valueOf(reEnterPassword.getText());
     phoneNo =String.valueOf(phoneNoText.getText());
 
-    if(name == null || userName == null || password == null || reEnterPassword==null /*|| phoneNo == "null" */){
+    if(name == null || userName == null || password == null || reEnterPassword==null || phoneNo == null){
         Toast.makeText(MainActivity.this, "Please fill all the Fields !", Toast.LENGTH_SHORT).show();
 
     }else {
