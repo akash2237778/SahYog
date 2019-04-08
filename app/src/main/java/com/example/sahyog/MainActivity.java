@@ -25,13 +25,13 @@ public class MainActivity extends AppCompatActivity {
     String userName;
     String password ;
     String reEnterPass;
-    int phoneNo;
+    String phoneNo;
     ParseUser user;
     Intent loginIntent;
 
 
 
-    public void SignUp (String name,String usrnme , String password,int phoneNo){
+    public void SignUp (String name,String usrnme , String password, String phoneNo){
         user = new ParseUser();
 
         user.setUsername(usrnme);
@@ -62,9 +62,9 @@ public void onClickSignUp (View view){
     userName = String.valueOf(userNameText.getText());
     password = String.valueOf(passwordText.getText());
     reEnterPass = String.valueOf(reEnterPassword.getText());
-    phoneNo =Integer.parseInt(String.valueOf(phoneNoText.getText()));
+    phoneNo =String.valueOf(phoneNoText.getText());
 
-    if(name == null || userName == null || password == null || reEnterPassword==null || phoneNo == NULL){
+    if(name == null || userName == null || password == null || reEnterPassword==null || phoneNo == "NULL"){
         Toast.makeText(MainActivity.this, "Please fill all the Fields !", Toast.LENGTH_SHORT).show();
 
     }else {
