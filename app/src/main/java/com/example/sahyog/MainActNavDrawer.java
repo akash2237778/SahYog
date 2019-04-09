@@ -82,7 +82,7 @@ public class MainActNavDrawer extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.user_services) {
-            Intent intent_provide = new Intent(this, Services.class);
+            Intent intent_provide = new Intent(this, ProvideService.class);
             startActivity(intent_provide);
 
         } else if (id == R.id.nav_gallery) {
