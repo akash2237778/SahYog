@@ -81,7 +81,7 @@ public class MainActNavDrawer extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.user_services) {
+        if (id == R.id.menuitem_provide) {
             Intent intent_provide = new Intent(this, ProvideService.class);
             startActivity(intent_provide);
 
