@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -12,6 +13,8 @@ import com.parse.ParseAnalytics;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
+
+import static java.sql.Types.NULL;
 
 public class MainActivity extends AppCompatActivity {
     EditText nameText;
@@ -26,14 +29,18 @@ public class MainActivity extends AppCompatActivity {
     String phoneNo;
     ParseUser user;
     Intent loginIntent;
+    Intent chngeIntent;
 
 
 
-    public void SignUp (String usrnme , String password){
+    public void SignUp (String name,String usrnme , String password, String phoneNo){
         user = new ParseUser();
 
         user.setUsername(usrnme);
     user.setPassword(password);
+user.put("phone",phoneNo);
+        user.put("name",name);
+
 
     user.signUpInBackground(new SignUpCallback() {
         @Override
@@ -59,12 +66,12 @@ public void onClickSignUp (View view){
     reEnterPass = String.valueOf(reEnterPassword.getText());
     phoneNo =String.valueOf(phoneNoText.getText());
 
-    if(name == null || userName == null || password == null || reEnterPassword==null /*|| phoneNo == "null" */){
+    if(name == null || userName == null || password == null || reEnterPassword==null || phoneNo == "NULL"){
         Toast.makeText(MainActivity.this, "Please fill all the Fields !", Toast.LENGTH_SHORT).show();
 
     }else {
         if (password.equals(reEnterPass)) {
-         SignUp(userName,password);
+         SignUp(name,userName,password,phoneNo);
         } else {
             Toast.makeText(MainActivity.this, "Passwords not same !", Toast.LENGTH_SHORT).show();
 
@@ -89,7 +96,15 @@ public void onClickSignUp (View view){
 
         loginIntent = new Intent(getApplicationContext(),LoginActivity.class);
 
+         chngeIntent = new Intent(getApplicationContext(),MainActNavDrawer.class);
 
 
+
+    }
+
+
+
+    public void OnclickChangeIntent(View view){
+     startActivity(chngeIntent);
     }
 }
