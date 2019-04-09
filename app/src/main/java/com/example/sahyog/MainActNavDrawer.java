@@ -13,14 +13,29 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
 public class MainActNavDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    RecyclerView recyclerView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_act_nav_drawer);
+
+        final Intent intent_provide = new Intent(this, ProvideService.class);
+
+        recyclerView = (RecyclerView)findViewById(R.id.RecyclerView);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        String[] names = {"Akash","Ak", "Abcd" , "Uv" ,"Vipul" , "Ayush","Akash","Ak", "Abcd" , "Uv" ,"Vipul" , "Ayush","Akash","Ak", "Abcd" , "Uv" ,"Vipul" , "Ayush"};
+        recyclerView.setAdapter(new AdapterProgram(names));
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -28,8 +43,10 @@ public class MainActNavDrawer extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
+                startActivity(intent_provide);
+               // Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                 //       .setAction("Action", null).show();
             }
         });
 
@@ -82,8 +99,7 @@ public class MainActNavDrawer extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.menuitem_provide) {
-            Intent intent_provide = new Intent(this, ProvideService.class);
-            startActivity(intent_provide);
+
 
         } else if (id == R.id.nav_gallery) {
 

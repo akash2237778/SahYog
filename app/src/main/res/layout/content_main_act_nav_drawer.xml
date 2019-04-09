@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/RecyclerView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.sahyog.MainActNavDrawer"
-    tools:showIn="@layout/app_bar_main_act_nav_drawer">
-
-</android.support.constraint.ConstraintLayout>
+    android:layout_marginTop="60dp"
+    tools:listitem="@layout/recycler_view_item"></android.support.v7.widget.RecyclerView>
