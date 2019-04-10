@@ -17,7 +17,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+//<<<<<<< akansha
+//=======
 import android.widget.Toast;
+//>>>>>>> Dev_akash
 
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -31,15 +34,19 @@ import java.util.Locale;
 public class ProvideService extends AppCompatActivity {
     EditText ET_service;
     EditText ET_peraddress;
-    EditText ET_curloc;
+    TextView ET_curloc;
     EditText ET_range;
     EditText ET_maxweight;
-    String pro_username,pro_phone,pro_service, pro_peraddress, pro_curloc, pro_range,pro_maxweight;
 
+//<<<<<<< akansha
+    String pro_username,pro_service, pro_peraddress, pro_curloc;
+    double pro_range,pro_maxweight;
+//=======
     LocationManager locationManager;
     LocationListener locationListener;
     TextView textViewAddress;
     String address = "Address not found !";
+//>>>>>>> Dev_akash
 
 
 
@@ -77,8 +84,8 @@ public class ProvideService extends AppCompatActivity {
         pro_service = ET_service.getText().toString();
         pro_peraddress = ET_peraddress.getText().toString();
         pro_curloc = ET_curloc.getText().toString();
-        pro_range = ET_range.getText().toString();
-        pro_maxweight = ET_maxweight.getText().toString();
+        pro_range = Double.parseDouble(ET_range.getText().toString());
+        pro_maxweight = Double.parseDouble(ET_maxweight.getText().toString());
         ParseObject provider= new ParseObject("ServiceProvider");
 
         pro_username= String.valueOf(ParseUser.getCurrentUser().getUsername());
@@ -88,7 +95,11 @@ public class ProvideService extends AppCompatActivity {
         provider.put("PerAddress",pro_peraddress);
         provider.put("CurLocation",pro_curloc);
         provider.put("ServiceRange",pro_range);
-        provider.put("MaxWeight",pro_maxweight);
+//<<<<<<< akansha
+        provider.put("MaximumWeight",pro_maxweight);
+//=======
+      //  provider.put("MaxWeight",pro_maxweight);
+//>>>>>>> Dev_akash
         provider.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
@@ -111,7 +122,11 @@ public class ProvideService extends AppCompatActivity {
 
          ET_service=findViewById(R.id.txtservice);
          ET_peraddress=findViewById(R.id.txtadd);
+//<<<<<<< akansha
+   //      ET_curloc=findViewById(R.id.txtcurlocation);
+//=======
         // ET_curloc=findViewById(R.id.txtcurlocaion);
+//>>>>>>> Dev_akash
          ET_range=findViewById(R.id.txtrange);
          ET_maxweight=findViewById(R.id.txtweight);
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
