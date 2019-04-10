@@ -18,15 +18,27 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+
 public class MainActNavDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     RecyclerView recyclerView;
+
+
+    public void getUserDetails(){
+        String[] usrName;
+
+
+    }
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_act_nav_drawer);
+
+
+
 
         final Intent intent_provide = new Intent(this, ProvideService.class);
 

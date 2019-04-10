@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
                     Log.i("logIn ", "Successful");
                     startActivity(MainNavDrawerIntent);
                 }else{
-                    Log.i("logIn ", "unSuccessful" + e.getMessage() );
+                    Log.i("logIn ", "unSuccessful  " + e.getMessage() );
                 }
             }
         });
