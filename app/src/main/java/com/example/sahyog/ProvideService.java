@@ -96,6 +96,7 @@ public class ProvideService extends AppCompatActivity {
         pro_curloc = ET_curloc.getText().toString();
         pro_range = Double.parseDouble(ET_range.getText().toString());
         pro_maxweight = Double.parseDouble(ET_maxweight.getText().toString());
+
         ParseObject provider= new ParseObject("ServiceProvider");
 
         pro_username= String.valueOf(ParseUser.getCurrentUser().getUsername());
@@ -107,8 +108,8 @@ public class ProvideService extends AppCompatActivity {
         provider.put("ServiceRange",pro_range);
 //<<<<<<< akansha
         provider.put("MaximumWeight",pro_maxweight);
-//=======
-      //  provider.put("MaxWeight",pro_maxweight);
+    //
+//  provider.put("MaxWeight",pro_maxweight);
 //>>>>>>> Dev_akash
         provider.saveInBackground(new SaveCallback() {
             @Override
@@ -135,7 +136,7 @@ public class ProvideService extends AppCompatActivity {
 //<<<<<<< akansha
    //      ET_curloc=findViewById(R.id.txtcurlocation);
 //=======
-        // ET_curloc=findViewById(R.id.txtcurlocaion);
+         ET_curloc=findViewById(R.id.txtcurlocaion);
 //>>>>>>> Dev_akash
          ET_range=findViewById(R.id.txtrange);
          ET_maxweight=findViewById(R.id.txtweight);
