@@ -49,7 +49,7 @@
     <TextView
         android:id="@+id/txtcurlocaion"
         android:layout_width="338dp"
-        android:layout_height="124dp"
+        android:layout_height="88dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
@@ -57,15 +57,15 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:ems="10"
-        android:hint=" \n Your Current Location \n  \n \n  \n \n"
+        android:hint="Location  \n  \n  \n"
         android:inputType="textPersonName"
-        android:textSize="10sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.319" />
+        app:layout_constraintVertical_bias="0.352" />
 
 
     <Button

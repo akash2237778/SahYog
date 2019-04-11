@@ -45,7 +45,7 @@ public class ProvideService extends AppCompatActivity {
     LocationManager locationManager;
     LocationListener locationListener;
     TextView textViewAddress;
-    String address = "Address not found !";
+    String address = "Last Location";
 //>>>>>>> Dev_akash
 
 
@@ -57,7 +57,17 @@ public class ProvideService extends AppCompatActivity {
     public void updateLocationInfo(Location location){
         Log.i("info", location.toString());
 
-        Toast.makeText(ProvideService.this, address, Toast.LENGTH_SHORT).show();
+       // Toast.makeText(ProvideService.this, address, Toast.LENGTH_SHORT).show();
+        Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+        try {
+            List<Address> listOfGeocoder  = geocoder.getFromLocation(location.getLatitude(),location.getLongitude(),1);
+            address = listOfGeocoder.get(0).getAddressLine(0);
+            Log.i("info " , " geocoder successful " + address);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
     public void startListening(){
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -140,15 +150,7 @@ public class ProvideService extends AppCompatActivity {
             public void onLocationChanged(Location location) {
 
                 updateLocationInfo(location);
-                Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
-                try {
-                    List<Address> listOfGeocoder  = geocoder.getFromLocation(location.getLatitude(),location.getLongitude(),1);
-                    address = listOfGeocoder.get(0).getAddressLine(0);
-                    Log.i("info " , " geocoder successful " + address);
 
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
 
                 // setTextViewInfo(textViewLatitude, String.valueOf(location.getLatitude()));
                // setTextViewInfo(textViewLongitude,String.valueOf(location.getLongitude()));
