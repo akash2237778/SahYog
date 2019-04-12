@@ -8,11 +8,19 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.StringBufferInputStream;
+
 public class AdapterProgram extends RecyclerView.Adapter<AdapterProgram.ProgramViewHolder>{
 
-    private  String[] data;
-    public AdapterProgram(String[] data){
-        this.data = data;
+    private  String[] userNameData;
+    private String[] userServiceData;
+    private String[] userAddressData;
+
+
+    public AdapterProgram(String[] data , String[] ServiceData , String[] addressData){
+        this.userNameData = data;
+        this.userServiceData = ServiceData;
+        this.userAddressData = addressData;
     }
 
 
@@ -27,21 +35,25 @@ public class AdapterProgram extends RecyclerView.Adapter<AdapterProgram.ProgramV
 
     @Override
     public void onBindViewHolder(@NonNull ProgramViewHolder programViewHolder, int i) {
-        String name = data[i];
-        programViewHolder.textView.setText(name);
-        programViewHolder.textDataView.setText("Hello this is first job available through shayog. Urgently needed if anyone available please contact!!");
+        String name = userNameData[i];
+        String service = userServiceData[i];
+        String address = userAddressData[i];
 
+        programViewHolder.textView.setText(name);
+        programViewHolder.textDataView.setText(service);
+        programViewHolder.textAddressView.setText(address);
     }
 
     @Override
     public int getItemCount() {
-        return  data.length;
+        return  userNameData.length;
     }
 
     public class ProgramViewHolder extends RecyclerView.ViewHolder {
         ImageView imgview;
         TextView textView;
         TextView textDataView;
+        TextView textAddressView;
 
         public ProgramViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -49,6 +61,8 @@ public class AdapterProgram extends RecyclerView.Adapter<AdapterProgram.ProgramV
             imgview = (ImageView) itemView.findViewById(R.id.imageView2);
             textView = (TextView) itemView.findViewById(R.id.textView);
             textDataView = (TextView) itemView.findViewById(R.id.textView2);
+            textAddressView = (TextView) itemView.findViewById(R.id.AddressTextView);
+
         }
     }
 }
