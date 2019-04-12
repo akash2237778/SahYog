@@ -22,6 +22,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 //>>>>>>> Dev_akash
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
@@ -45,8 +48,13 @@ public class ProvideService extends AppCompatActivity {
     LocationManager locationManager;
     LocationListener locationListener;
     TextView textViewAddress;
-    String address = "Last Location";
+    String address = "Wait For A While .....";
 //>>>>>>> Dev_akash
+
+
+
+    DatabaseReference databaseReferenceForPFrom;
+    FireBaseToStoreProvideServiceForm objectToSendToJavaClass;
 
 
 
@@ -71,7 +79,7 @@ public class ProvideService extends AppCompatActivity {
     }
     public void startListening(){
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 10, locationListener);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 12, 10, locationListener);
         }
     }
 
@@ -89,40 +97,6 @@ public class ProvideService extends AppCompatActivity {
     }
 
 
-    public void proFormSubmit(View view)
-    {
-        pro_service = ET_service.getText().toString();
-        pro_peraddress = ET_peraddress.getText().toString();
-        pro_curloc = ET_curloc.getText().toString();
-        pro_range = Double.parseDouble(ET_range.getText().toString());
-        pro_maxweight = Double.parseDouble(ET_maxweight.getText().toString());
-
-        ParseObject provider= new ParseObject("ServiceProvider");
-
-        pro_username= String.valueOf(ParseUser.getCurrentUser().getUsername());
-
-        provider.put("username",pro_username);
-        provider.put("service",pro_service);
-        provider.put("PerAddress",pro_peraddress);
-        provider.put("CurLocation",pro_curloc);
-        provider.put("ServiceRange",pro_range);
-//<<<<<<< akansha
-        provider.put("MaximumWeight",pro_maxweight);
-    //
-//  provider.put("MaxWeight",pro_maxweight);
-//>>>>>>> Dev_akash
-        provider.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if( e==null ){
-                    Toast.makeText(ProvideService.this, "Successful", Toast.LENGTH_SHORT).show();
-                    Log.i("Submit ","Successful");
-                }else{
-                    Log.i("Submit ","unSuccessful :" + e.getMessage());
-                }
-            }
-        });
-    }
 
 
     @Override
@@ -130,8 +104,12 @@ public class ProvideService extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_provide_service);
 
+       // FirebaseApp.initializeApp(this);
+        databaseReferenceForPFrom = FirebaseDatabase.getInstance().getReference();
+        databaseReferenceForPFrom.child("ProvideServiceDatabase");
 
-         ET_service=findViewById(R.id.txtservice);
+
+        ET_service=findViewById(R.id.txtservice);
          ET_peraddress=findViewById(R.id.txtadd);
 //<<<<<<< akansha
    //      ET_curloc=findViewById(R.id.txtcurlocation);
@@ -180,12 +158,60 @@ public class ProvideService extends AppCompatActivity {
         }
         else {
 
-            startListening();
-            Location lastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            updateLocationInfo(lastLocation);
+           // startListening();
+           // Location lastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+           // updateLocationInfo(lastLocation);
 
         }
 
 
     }
+    public void proFormSubmit(View view)
+    {
+        pro_service = ET_service.getText().toString();
+        pro_peraddress = ET_peraddress.getText().toString();
+        pro_curloc = ET_curloc.getText().toString();
+        pro_range = Double.parseDouble(ET_range.getText().toString());
+        pro_maxweight = Double.parseDouble(ET_maxweight.getText().toString());
+
+        ParseObject provider= new ParseObject("ServiceProvider");
+
+        pro_username= String.valueOf(ParseUser.getCurrentUser().getUsername());
+
+        objectToSendToJavaClass.setPro_service("Service");
+        objectToSendToJavaClass.setPro_username(pro_username);
+        objectToSendToJavaClass.setPro_peraddress(pro_peraddress);
+        objectToSendToJavaClass.setPro_curloc(pro_curloc);
+        objectToSendToJavaClass.setPro_range(pro_range);
+        objectToSendToJavaClass.setPro_maxweight(pro_maxweight);
+
+        databaseReferenceForPFrom.push().setValue(objectToSendToJavaClass);
+
+
+
+
+
+        provider.put("username",pro_username);
+        provider.put("service",pro_service);
+        provider.put("PerAddress",pro_peraddress);
+        provider.put("CurLocation",pro_curloc);
+        provider.put("ServiceRange",pro_range);
+//<<<<<<< akansha
+        provider.put("MaximumWeight",pro_maxweight);
+        //
+//  provider.put("MaxWeight",pro_maxweight);
+//>>>>>>> Dev_akash
+        provider.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if( e==null ){
+                    Toast.makeText(ProvideService.this, "Successful", Toast.LENGTH_SHORT).show();
+                    Log.i("Submit ","Successful");
+                }else{
+                    Log.i("Submit ","unSuccessful :" + e.getMessage());
+                }
+            }
+        });
+    }
+
 }
