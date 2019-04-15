@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.sahyog">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:name=".ParseServerDetails"
         android:allowBackup="true"
@@ -10,8 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ProvideService"></activity>
-         <activity
+        <activity android:name=".ChatActivity"></activity>
+        <activity android:name=".ProvideService" />
+        <activity
             android:name=".MainActNavDrawer"
             android:label="@string/title_activity_main_act_nav_drawer"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -24,6 +27,5 @@
             </intent-filter>
         </activity>
     </application>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
 </manifest>
