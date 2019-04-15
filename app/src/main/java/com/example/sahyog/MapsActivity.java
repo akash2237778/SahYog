@@ -26,6 +26,9 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.SaveCallback;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,7 +38,7 @@ import java.util.Locale;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    Location location;
+    Location locationSet;
     LocationManager locationManager;
     LocationListener locationListener;
     LatLng latLong;
@@ -43,15 +46,32 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     String addressLine2beStored;
     Intent intent2main;
     LatLng latLngToBeStored;
+    ParseObject provider;
 
 
 
     public void AddPosition(View view){
-        intent2main.putExtra("latitude",String.valueOf(latLngToBeStored.latitude));
+
+        provider.put("PerAddressLoc",locationSet);
+
+
+        /*intent2main.putExtra("latitude",String.valueOf(latLngToBeStored.latitude));
         intent2main.putExtra("longitude",String.valueOf(latLngToBeStored.longitude));
         MainActivity mainActivity = new MainActivity();
+      */
 
 
+        provider.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if( e==null ){
+                    Toast.makeText(MapsActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                    Log.i("Submit ","Successful");
+                }else{
+                    Log.i("Submit ","unSuccessful :" + e.getMessage());
+                }
+            }
+        });
     }
 
     public void ToastMaker(String string){
@@ -116,6 +136,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        provider= new ParseObject("ServiceProvider");
+
+
         intent2main = new Intent(getApplicationContext(),MainActivity.class);
 
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
@@ -124,6 +147,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onLocationChanged(Location location) {
                 UpdateLocationChangeInfo(location);
                 Log.i("info :", "location");
+                locationSet = location;
             }
 
             @Override
