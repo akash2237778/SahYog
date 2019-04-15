@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -28,6 +29,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.IOException;
@@ -47,20 +49,39 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Intent intent2main;
     LatLng latLngToBeStored;
     ParseObject provider;
+    Intent FormCallbackIntent;
+    Button buttonAddPos;
+    String pro_username,pro_service, pro_peraddress, pro_curloc;
+    String pro_range,pro_maxweight;
+    Intent mapActivityIntent;
 
 
 
     public void AddPosition(View view){
 
-        provider.put("PerAddressLoc",locationSet);
+        Log.i("locoInfo :" , String.valueOf(locationSet));
 
 
-        /*intent2main.putExtra("latitude",String.valueOf(latLngToBeStored.latitude));
-        intent2main.putExtra("longitude",String.valueOf(latLngToBeStored.longitude));
-        MainActivity mainActivity = new MainActivity();
-      */
+        pro_service = mapActivityIntent.getStringExtra("pro_service");
+        // pro_peraddress = ET_peraddress.getText().toString();
+        //pro_curloc = ET_curloc.getText().toString();
+        pro_range = mapActivityIntent.getStringExtra("pro_range");
+        pro_maxweight = mapActivityIntent.getStringExtra("pro_maxweight");
 
+        ParseObject provider= new ParseObject("ServiceProvider");
 
+       // pro_username= String.valueOf(ParseUser.getCurrentUser().getUsername());
+
+        provider.put("username",pro_username);
+        provider.put("service",pro_service);
+        // provider.put("PerAddress",pro_peraddress);
+        //provider.put("CurLocation",pro_curloc);
+        provider.put("ServiceRange",pro_range);
+//<<<<<<< akansha
+        provider.put("MaximumWeight",pro_maxweight);
+        //
+//  provider.put("MaxWeight",pro_maxweight);
+//>>>>>>> Dev_akash
         provider.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
@@ -72,6 +93,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
             }
         });
+
+
+
+        //provider.put("PerAddressLoc",locationSet);
+       // FormCallbackIntent.putExtra("perAddLocation" , locationSet);
+       // startActivity(FormCallbackIntent);
+
+        /*intent2main.putExtra("latitude",String.valueOf(latLngToBeStored.latitude));
+        intent2main.putExtra("longitude",String.valueOf(latLngToBeStored.longitude));
+        MainActivity mainActivity = new MainActivity();
+      */
+
     }
 
     public void ToastMaker(String string){
@@ -79,6 +112,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void UpdateLocationChangeInfo(Location location) {
+            buttonAddPos.setVisibility(View.VISIBLE);
+
         latLong = new LatLng(location.getLatitude(), location.getLongitude());
         mMap.clear();
         mMap.addMarker(new MarkerOptions().position(latLong));
@@ -135,6 +170,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        mapActivityIntent = getIntent();
+
+        buttonAddPos = findViewById(R.id.buttonAddPosition);
+
+
+        FormCallbackIntent = new Intent(getApplicationContext(),ProvideService.class);
 
         provider= new ParseObject("ServiceProvider");
 

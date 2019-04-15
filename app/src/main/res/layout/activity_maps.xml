@@ -12,23 +12,24 @@ android:orientation="vertical">
     android:layout_height="match_parent"
     tools:context="com.example.sahyog.MapsActivity" />
 
-<Button
-    android:id="@+id/buttonAddPosition"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentTop="true"
-    android:layout_alignParentEnd="true"
-    android:layout_marginStart="5dp"
-    android:layout_marginTop="669dp"
-    android:layout_marginEnd="22dp"
-    android:layout_marginBottom="5dp"
-    android:background="#359c5e"
-    android:onClick="AddPosition"
-    android:padding="8dp"
-    android:text="Add Position"
-    android:textColor="#ffffff"
-    android:layout_marginLeft="5dp"
-    android:layout_alignParentRight="true"
-    android:layout_marginRight="22dp" />
+    <Button
+        android:id="@+id/buttonAddPosition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="669dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginRight="22dp"
+        android:layout_marginBottom="5dp"
+        android:background="#359c5e"
+        android:onClick="AddPosition"
+        android:padding="8dp"
+        android:text="Add Position"
+        android:textColor="#ffffff"
+        android:visibility="invisible" />
 
 </RelativeLayout>

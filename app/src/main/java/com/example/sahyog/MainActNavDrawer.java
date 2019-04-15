@@ -35,9 +35,9 @@ public class MainActNavDrawer extends AppCompatActivity
     RecyclerView recyclerView;
 ArrayList<String> arrayListToStoreUserData = new ArrayList<>();
 //ArrayAdapter arrayAdapterForStoreUserData;
-String[] names   = {"user1", "user2" , ""};
-    String[] userServiceArr = {"", "" , ""};
-    String[] userCurAddressArr = {"", "" , ""};
+String[] names   = {"user1", "user2" , "","","",""};
+    String[] userServiceArr = {"", "" , "","","",""};
+    String[] userCurAddressArr = {"", "" , "","","",""};
 
 
 
