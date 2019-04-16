@@ -60,28 +60,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void AddPosition(View view){
 
         Log.i("locoInfo :" , String.valueOf(locationSet));
+ Toast.makeText(MapsActivity.this, pro_service + pro_range + pro_maxweight + pro_username , Toast.LENGTH_SHORT).show();
+Log.i("parseINfo " , pro_service + pro_range + pro_maxweight + pro_username);
 
 
-        pro_service = mapActivityIntent.getStringExtra("pro_service");
-        // pro_peraddress = ET_peraddress.getText().toString();
-        //pro_curloc = ET_curloc.getText().toString();
-        pro_range = mapActivityIntent.getStringExtra("pro_range");
-        pro_maxweight = mapActivityIntent.getStringExtra("pro_maxweight");
-
-        ParseObject provider= new ParseObject("ServiceProvider");
-
-       // pro_username= String.valueOf(ParseUser.getCurrentUser().getUsername());
 
         provider.put("username",pro_username);
         provider.put("service",pro_service);
-        // provider.put("PerAddress",pro_peraddress);
-        //provider.put("CurLocation",pro_curloc);
-        provider.put("ServiceRange",pro_range);
-//<<<<<<< akansha
-        provider.put("MaximumWeight",pro_maxweight);
-        //
-//  provider.put("MaxWeight",pro_maxweight);
-//>>>>>>> Dev_akash
+        provider.put("ServiceRange", 8);
+       provider.put("MaximumWeight", 9 );
+
         provider.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
@@ -96,7 +84,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
 
-        //provider.put("PerAddressLoc",locationSet);
+       //provider.put("PerAddressLoc",locationSet);
        // FormCallbackIntent.putExtra("perAddLocation" , locationSet);
        // startActivity(FormCallbackIntent);
 
@@ -104,6 +92,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         intent2main.putExtra("longitude",String.valueOf(latLngToBeStored.longitude));
         MainActivity mainActivity = new MainActivity();
       */
+
+
 
     }
 
@@ -175,10 +165,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         buttonAddPos = findViewById(R.id.buttonAddPosition);
 
+        provider= new ParseObject("ServiceProvider");
+
+
+        pro_service = mapActivityIntent.getStringExtra("pro_service");
+        pro_range = mapActivityIntent.getStringExtra("pro_range");
+        pro_maxweight = mapActivityIntent.getStringExtra("pro_maxweight");
+        pro_username= String.valueOf(ParseUser.getCurrentUser().getUsername());
+
 
         FormCallbackIntent = new Intent(getApplicationContext(),ProvideService.class);
 
-        provider= new ParseObject("ServiceProvider");
 
 
         intent2main = new Intent(getApplicationContext(),MainActivity.class);

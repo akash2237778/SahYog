@@ -43,7 +43,7 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void done(ParseException e) {
 
-                msgs.clear();
+               // msgs.clear();
 
                 if(e==null)
 
