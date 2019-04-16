@@ -69,6 +69,8 @@ Log.i("parseINfo " , pro_service + pro_range + pro_maxweight + pro_username);
         provider.put("service",pro_service);
         provider.put("ServiceRange", 8);
        provider.put("MaximumWeight", 9 );
+       Log.i("parseLOcInfo" , String.valueOf(latLong) );
+       provider.put("Location", String.valueOf(latLong) );
 
         provider.saveInBackground(new SaveCallback() {
             @Override
@@ -111,7 +113,6 @@ Log.i("parseINfo " , pro_service + pro_range + pro_maxweight + pro_username);
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-                ToastMaker("hii");
 
                 mMap.clear();
                 mMap.addMarker(new MarkerOptions().position((latLng)));
