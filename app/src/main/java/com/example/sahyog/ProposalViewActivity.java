@@ -19,6 +19,7 @@ import java.util.List;
 public class ProposalViewActivity extends AppCompatActivity {
 
     Intent chatActIntent;
+    String objid;
 
     public void callChat(View view)
     {
@@ -27,9 +28,7 @@ public class ProposalViewActivity extends AppCompatActivity {
 
    public void callConfirm(View view) {
 
-       String objid;
 
-        objid=intent.getStringExtra("objectId");
 
         ParseQuery<ParseObject> query=ParseQuery.getQuery("ServiceProvider");
         query.getInBackground(objid,new GetCallback<ParseObject>(){
@@ -63,10 +62,10 @@ public class ProposalViewActivity extends AppCompatActivity {
 
         intent = getIntent();
         mapDirIntent = new Intent(getApplicationContext(),mapDirectionActivity.class);
-        String objectId = intent.getStringExtra("ObjectId");
-       // Double lat = intent.getDoubleExtra("lat",30.11);
+        objid = intent.getStringExtra("ObjectId");
+       //Double lat = intent.getDoubleExtra("lat",30.11);
         //Double long1 = intent.getDoubleExtra("long",30.11);
-        Log.i("ObjectID " , objectId );
+        //Log.i("ObjectID " , objid );
         mapDirIntent.putExtra("userName", intent.getStringExtra("userNames"));
         mapDirIntent.putExtra("lat", intent.getDoubleExtra("lat",30.11));
         mapDirIntent.putExtra("long", intent.getDoubleExtra("long",30.11));
