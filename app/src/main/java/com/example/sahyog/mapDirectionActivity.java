@@ -1,4 +1,5 @@
 package com.example.sahyog;
+
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -16,7 +18,6 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -25,109 +26,71 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
-import com.parse.ParseUser;
-import com.parse.SaveCallback;
+import com.parse.ParseQuery;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class mapDirectionActivity extends FragmentActivity implements OnMapReadyCallback {
 
+   // private GoogleMap mMap2;
     private GoogleMap mMap;
-    Location locationSet;
-    LocationManager locationManager;
-    LocationListener locationListener;
+    String userName;
+    Double Latitude;
+    Double Longitude;
+    Intent mapDirIntent;
     LatLng latLong;
     String addressLine;
     String addressLine2beStored;
-    Intent intent2main;
-    Intent intent2RecyclerView;
     LatLng latLngToBeStored;
-    ParseObject provider;
-    Intent FormCallbackIntent;
+    LocationManager locationManager;
+    LocationListener locationListener;
+    Location locationSet;
     Button buttonAddPos;
-    String pro_username,pro_service, pro_peraddress, pro_curloc;
-    String pro_range,pro_maxweight;
-    Intent mapActivityIntent;
-
 
 
     public void AddPosition(View view){
-
-        Log.i("locoInfo :" , String.valueOf(locationSet));
-// Toast.makeText(MapsActivity.this, pro_service + pro_range + pro_maxweight + pro_username , Toast.LENGTH_SHORT).show();
-Log.i("parseINfo " , pro_service + pro_range + pro_maxweight + pro_username);
-
-
-
-        provider.put("username",pro_username);
-        provider.put("service",pro_service);
-        provider.put("ServiceRange", 8);
-       provider.put("MaximumWeight", 9 );
-       provider.put("LocationLONG", latLngToBeStored.longitude );
-        provider.put("LocationLAT", latLngToBeStored.latitude );
-
-
-        provider.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if( e==null ){
-                    Toast.makeText(MapsActivity.this, "Successful", Toast.LENGTH_SHORT).show();
-                    Log.i("Submit ","Successful");
-                }else{
-                    Log.i("Submit ","unSuccessful :" + e.getMessage());
-                }
-            }
-        });
-
-        Log.i("parseLOcInfo" , String.valueOf(latLong) );
-
-
-        startActivity(intent2RecyclerView);
-
+        Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                Uri.parse("http://maps.google.com/maps?saddr="+latLong.latitude +"," + latLong.longitude +"&daddr="+Latitude+","+Longitude));
+        startActivity(intent);
     }
-
 
 
     public void ToastMaker(String string){
-        Toast.makeText(MapsActivity.this, string , Toast.LENGTH_SHORT).show();
+        Toast.makeText(mapDirectionActivity.this, string , Toast.LENGTH_SHORT).show();
     }
 
-
-
-
     public void UpdateLocationChangeInfo(Location location) {
-            buttonAddPos.setVisibility(View.VISIBLE);
+         buttonAddPos.setVisibility(View.VISIBLE);
 
-            latLong = new LatLng(location.getLatitude(), location.getLongitude());
-            mMap.clear();
-            mMap.addMarker(new MarkerOptions().position(latLong));
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLong));
-            mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-                @Override
-                public void onMapClick(LatLng latLng) {
+        latLong = new LatLng(location.getLatitude(), location.getLongitude());
 
-                    mMap.clear();
-                    mMap.addMarker(new MarkerOptions().position((latLng)));
-                    Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
-                    try {
-                        List<Address> addressList = geocoder.getFromLocation(latLng.latitude,latLng.longitude,1);
-                        addressLine2beStored = addressList.get(0).getAddressLine(0);
-                        ToastMaker(addressLine2beStored);
-                        latLngToBeStored = latLng;
+        mMap.addMarker(new MarkerOptions().position(latLong));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLong));
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
 
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
 
+                mMap.addMarker(new MarkerOptions().position((latLng)));
+                Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+                try {
+                    List<Address> addressList = geocoder.getFromLocation(latLng.latitude,latLng.longitude,1);
+                    addressLine2beStored = addressList.get(0).getAddressLine(0);
+                    ToastMaker(addressLine2beStored);
+                    latLngToBeStored = latLng;
+
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            });
+
+            }
+        });
         Log.i("info", location.toString());
         Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
         try {
@@ -138,7 +101,6 @@ Log.i("parseINfo " , pro_service + pro_range + pro_maxweight + pro_username);
             e.printStackTrace();
         }
     }
-
 
 
     @Override
@@ -152,36 +114,44 @@ Log.i("parseINfo " , pro_service + pro_range + pro_maxweight + pro_username);
         }
     }
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
+        setContentView(R.layout.activity_map_direction);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        mapActivityIntent = getIntent();
+        buttonAddPos = findViewById(R.id.buttonAddPosition2);
 
-        buttonAddPos = findViewById(R.id.buttonAddPosition);
-
-        provider= new ParseObject("ServiceProvider");
-
-
-        pro_service = mapActivityIntent.getStringExtra("pro_service");
-        pro_range = mapActivityIntent.getStringExtra("pro_range");
-        pro_maxweight = mapActivityIntent.getStringExtra("pro_maxweight");
-        pro_username= String.valueOf(ParseUser.getCurrentUser().getUsername());
-
-
-        FormCallbackIntent = new Intent(getApplicationContext(),ProvideService.class);
+        mapDirIntent = getIntent();
+        userName = mapDirIntent.getStringExtra("userName");
+        Latitude = mapDirIntent.getDoubleExtra("lat" , 30.40496952);
+        Longitude = mapDirIntent.getDoubleExtra("long" , 77.93542722);
 
 
 
-        intent2main = new Intent(getApplicationContext(),MainActivity.class);
-        intent2RecyclerView = new Intent(getApplicationContext(),MainActNavDrawer.class);
+     /*   ParseQuery<ParseObject> queryForUsername = ParseQuery.getQuery("ServiceProvider");
+       queryForUsername.whereEqualTo("username",userName);
+        queryForUsername.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if(e == null){
+                    if(objects.size()>0){
+                        for(ParseObject UserInfo : objects){
+
+                            Latitude = (Double) UserInfo.getNumber("LocationLAT");
+                            Longitude = UserInfo.getNumber("LocationLONG");
+
+                        }
+                     }
+                    }
+                }
+            });
+
+*/
+        Log.i("lat+long " ,userName + String.valueOf(Latitude) + String.valueOf(Longitude));
 
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         locationListener = new LocationListener() {
@@ -208,7 +178,6 @@ Log.i("parseINfo " , pro_service + pro_range + pro_maxweight + pro_username);
             }
         };
 
-
     }
 
 
@@ -226,22 +195,18 @@ Log.i("parseINfo " , pro_service + pro_range + pro_maxweight + pro_username);
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
+        LatLng serviceReciverLOC = new LatLng(Latitude, Longitude);
+        mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)).position(serviceReciverLOC).title("Service Location"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(serviceReciverLOC,15));
+
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }
         else{
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER , 0 , 1000 ,locationListener );
             Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            LatLng mylocation = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
-            mMap.clear();
-            mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)).position(mylocation).title("My Location"));
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mylocation, 15 ));
-            Toast.makeText(MapsActivity.this, "Updating Location........", Toast.LENGTH_LONG).show();
+
 
         }
-
     }
-
-
-
 }
