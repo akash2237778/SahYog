@@ -38,14 +38,21 @@ import java.util.Locale;
 public class MainActNavDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     RecyclerView recyclerView;
+    Intent proposalActivityIntent;
+    Intent mapDirectionIntent;
 ArrayList<String> arrayListToStoreUserData = new ArrayList<>();
 //ArrayAdapter arrayAdapterForStoreUserData;
-String[] names   = {"user1", "user2" , "","","","","",""};
+
+    String[] names   = {"user1", "user2" , "","","","","",""};
     String[] userServiceArr = {"", "" , "","","","","",""};
     String[] userCurAddressArr = {"", "" , "","","","","",""};
 
 
     String addressLine2beStored;
+
+
+
+
 
 
     public String GeocoderProg(Double Latitude , Double Longitude){
@@ -69,6 +76,8 @@ String[] names   = {"user1", "user2" , "","","","","",""};
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_act_nav_drawer);
 
+        proposalActivityIntent = new Intent(getApplicationContext(),ProposalViewActivity.class);
+       // mapDirectionIntent = new Intent(getApplicationContext(),mapDirectionActivity.class);
 
         ParseQuery<ParseObject> queryForUsername = ParseQuery.getQuery("ServiceProvider");
         //queryForUsername.whereNotEqualTo("username" , ParseUser.getCurrentUser().getUsername() );
@@ -108,6 +117,20 @@ String[] names   = {"user1", "user2" , "","","","","",""};
         recyclerView = (RecyclerView)findViewById(R.id.RecyclerView);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(getApplicationContext(), recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, int position) {
+                         proposalActivityIntent.putExtra("userNames" , names[position]);
+                         //mapDirectionIntent.putExtra("userNames",names[position]);
+                        startActivity(proposalActivityIntent);
+
+                    }
+
+                    @Override public void onLongItemClick(View view, int position) {
+                        // do whatever
+                    }
+                })
+        );
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

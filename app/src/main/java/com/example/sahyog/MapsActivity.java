@@ -47,6 +47,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     String addressLine;
     String addressLine2beStored;
     Intent intent2main;
+    Intent intent2RecyclerView;
     LatLng latLngToBeStored;
     ParseObject provider;
     Intent FormCallbackIntent;
@@ -60,7 +61,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void AddPosition(View view){
 
         Log.i("locoInfo :" , String.valueOf(locationSet));
- Toast.makeText(MapsActivity.this, pro_service + pro_range + pro_maxweight + pro_username , Toast.LENGTH_SHORT).show();
+// Toast.makeText(MapsActivity.this, pro_service + pro_range + pro_maxweight + pro_username , Toast.LENGTH_SHORT).show();
 Log.i("parseINfo " , pro_service + pro_range + pro_maxweight + pro_username);
 
 
@@ -87,7 +88,7 @@ Log.i("parseINfo " , pro_service + pro_range + pro_maxweight + pro_username);
 
 
 
-
+        startActivity(intent2RecyclerView);
 
     }
 
@@ -172,6 +173,7 @@ Log.i("parseINfo " , pro_service + pro_range + pro_maxweight + pro_username);
 
 
         intent2main = new Intent(getApplicationContext(),MainActivity.class);
+        intent2RecyclerView = new Intent(getApplicationContext(),MainActNavDrawer.class);
 
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         locationListener = new LocationListener() {
