@@ -42,13 +42,17 @@ public class MainActNavDrawer extends AppCompatActivity
     Intent mapDirectionIntent;
     Double Latitude;
     Double Longitude;
+    Double[] LatitudeArr;
+    Double[] LongitudeArr;
+    int SIZE;
 
 ArrayList<String> arrayListToStoreUserData = new ArrayList<>();
 //ArrayAdapter arrayAdapterForStoreUserData;
 
-    String[] names   = {"user1", "user2" , "","","","","",""};
-    String[] userServiceArr = {"", "" , "","","","","",""};
-    String[] userCurAddressArr = {"", "" , "","","","","",""};
+    String[] names;
+    String[] userServiceArr;
+    String[] userCurAddressArr;
+    String[] ObjectId;
 
 
     String addressLine2beStored;
@@ -79,6 +83,7 @@ ArrayList<String> arrayListToStoreUserData = new ArrayList<>();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_act_nav_drawer);
 
+
         proposalActivityIntent = new Intent(getApplicationContext(),ProposalViewActivity.class);
        // mapDirectionIntent = new Intent(getApplicationContext(),mapDirectionActivity.class);
 
@@ -89,6 +94,14 @@ ArrayList<String> arrayListToStoreUserData = new ArrayList<>();
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
                 if(e == null){
+                    SIZE = objects.size();
+                    LatitudeArr = new Double[SIZE];
+                    LongitudeArr = new Double[SIZE];
+                    names = new String[SIZE];
+                    userServiceArr = new String[SIZE];
+                    userCurAddressArr = new String[SIZE];
+                    ObjectId = new String[SIZE];
+
                     if(objects.size()>0){
                         int i=0;
                         for(ParseObject UserInfo : objects){
@@ -96,17 +109,21 @@ ArrayList<String> arrayListToStoreUserData = new ArrayList<>();
                             String userService = UserInfo.getString("service");
                             Latitude = UserInfo.getDouble("LocationLAT");
                             Longitude = UserInfo.getDouble("LocationLONG");
+                            String ObjectID = UserInfo.getObjectId();
                             Log.i("ParseInfo :" , userService + String.valueOf(Latitude));
                             userServiceArr[i] = userService;
                             userCurAddressArr[i] = GeocoderProg(Latitude,Longitude);
-
-
+                            LatitudeArr[i]=Latitude;
+                            LongitudeArr[i] = Longitude;
+                            ObjectId[i] = ObjectID;
 
                            names[i] = userName;
+
                             i++;
                             recyclerView.setAdapter(new AdapterProgram(names , userServiceArr , userCurAddressArr));
 
                         }
+
                     }
                 }
             }
@@ -124,8 +141,10 @@ ArrayList<String> arrayListToStoreUserData = new ArrayList<>();
                 new RecyclerItemClickListener(getApplicationContext(), recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
                          proposalActivityIntent.putExtra("userNames" , names[position]);
-                         proposalActivityIntent.putExtra("lat" ,Latitude );
-                         proposalActivityIntent.putExtra("long",Longitude);
+                         proposalActivityIntent.putExtra("lat" ,LatitudeArr[position] );
+                         proposalActivityIntent.putExtra("long",LongitudeArr[position]);
+                        proposalActivityIntent.putExtra("ObjectId", ObjectId[position]);
+
                          //mapDirectionIntent.putExtra("userNames",names[position]);
                         startActivity(proposalActivityIntent);
 
