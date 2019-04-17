@@ -52,6 +52,7 @@ ArrayList<String> arrayListToStoreUserData = new ArrayList<>();
     String[] names;
     String[] userServiceArr;
     String[] userCurAddressArr;
+    String[] ObjectId;
 
 
     String addressLine2beStored;
@@ -99,6 +100,7 @@ ArrayList<String> arrayListToStoreUserData = new ArrayList<>();
                     names = new String[SIZE];
                     userServiceArr = new String[SIZE];
                     userCurAddressArr = new String[SIZE];
+                    ObjectId = new String[SIZE];
 
                     if(objects.size()>0){
                         int i=0;
@@ -107,18 +109,21 @@ ArrayList<String> arrayListToStoreUserData = new ArrayList<>();
                             String userService = UserInfo.getString("service");
                             Latitude = UserInfo.getDouble("LocationLAT");
                             Longitude = UserInfo.getDouble("LocationLONG");
+                            String ObjectID = UserInfo.getObjectId();
                             Log.i("ParseInfo :" , userService + String.valueOf(Latitude));
                             userServiceArr[i] = userService;
                             userCurAddressArr[i] = GeocoderProg(Latitude,Longitude);
                             LatitudeArr[i]=Latitude;
                             LongitudeArr[i] = Longitude;
-
+                            ObjectId[i] = ObjectID;
 
                            names[i] = userName;
+
                             i++;
                             recyclerView.setAdapter(new AdapterProgram(names , userServiceArr , userCurAddressArr));
 
                         }
+
                     }
                 }
             }
@@ -138,6 +143,8 @@ ArrayList<String> arrayListToStoreUserData = new ArrayList<>();
                          proposalActivityIntent.putExtra("userNames" , names[position]);
                          proposalActivityIntent.putExtra("lat" ,LatitudeArr[position] );
                          proposalActivityIntent.putExtra("long",LongitudeArr[position]);
+                        proposalActivityIntent.putExtra("ObjectId", ObjectId[position]);
+
                          //mapDirectionIntent.putExtra("userNames",names[position]);
                         startActivity(proposalActivityIntent);
 

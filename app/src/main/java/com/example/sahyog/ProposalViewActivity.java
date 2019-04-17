@@ -63,12 +63,13 @@ public class ProposalViewActivity extends AppCompatActivity {
 
         intent = getIntent();
         mapDirIntent = new Intent(getApplicationContext(),mapDirectionActivity.class);
-       // String userNam = intent.getStringExtra("userNames");
+        String objectId = intent.getStringExtra("ObjectId");
        // Double lat = intent.getDoubleExtra("lat",30.11);
         //Double long1 = intent.getDoubleExtra("long",30.11);
-       // Log.i("usrnInfo " ,userNam );
+        Log.i("ObjectID " , objectId );
         mapDirIntent.putExtra("userName", intent.getStringExtra("userNames"));
         mapDirIntent.putExtra("lat", intent.getDoubleExtra("lat",30.11));
         mapDirIntent.putExtra("long", intent.getDoubleExtra("long",30.11));
+
     }
 }
