@@ -70,9 +70,9 @@ Log.i("parseINfo " , pro_service + pro_range + pro_maxweight + pro_username);
         provider.put("service",pro_service);
         provider.put("ServiceRange", 8);
        provider.put("MaximumWeight", 9 );
-       Log.i("parseLOcInfo" , String.valueOf(latLong) );
        provider.put("LocationLONG", latLngToBeStored.longitude );
         provider.put("LocationLAT", latLngToBeStored.latitude );
+
 
         provider.saveInBackground(new SaveCallback() {
             @Override
@@ -86,6 +86,7 @@ Log.i("parseINfo " , pro_service + pro_range + pro_maxweight + pro_username);
             }
         });
 
+        Log.i("parseLOcInfo" , String.valueOf(latLong) );
 
 
         startActivity(intent2RecyclerView);
