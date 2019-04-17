@@ -46,12 +46,13 @@ public class ChatActivity extends AppCompatActivity {
                // msgs.clear();
 
                 if(e==null)
-
+                {
                     msgs.add(messageContent);
                 arrayAdapter.notifyDataSetChanged();
 
             }
-        });
+            }
+        } );
     }
 
     @Override
@@ -107,5 +108,5 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-    }
+}
 }
