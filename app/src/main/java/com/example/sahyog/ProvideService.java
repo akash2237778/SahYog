@@ -82,6 +82,7 @@ public class ProvideService extends AppCompatActivity {
         provider.put("PerAddress",pro_peraddress);
         provider.put("CurLocation",pro_curloc);
         provider.put("ServiceRange",pro_range);
+        provider.put("ConfirmStatus",0);
 //<<<<<<< akansha
         provider.put("MaximumWeight",pro_maxweight);
     //

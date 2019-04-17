@@ -7,8 +7,43 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.parse.FindCallback;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+
+import java.util.List;
+
 public class ProposalViewActivity extends AppCompatActivity {
 
+    Intent chatActIntent;
+
+    public void callChat(View view)
+    {
+        startActivity(chatActIntent);
+    }
+
+   public void callConfirm(View view) {
+
+       String objid;
+
+        objid=intent.getStringExtra("objectId");
+
+        ParseQuery<ParseObject> query=ParseQuery.getQuery("ServiceProvider");
+        query.getInBackground(objid,new GetCallback<ParseObject>(){
+                                   @Override
+                                   public void done(ParseObject object, ParseException e) {
+                                       if(e==null && object!=null){
+                                           object.put("ConfirmStatus",1);
+                                           object.saveInBackground();
+                                       }
+                                   }
+
+    });
+
+   }
     Intent mapDirIntent;
     Intent intent;
 
@@ -21,6 +56,10 @@ public class ProposalViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_proposal_view);
+
+
+
+        chatActIntent=new Intent(getApplicationContext(),ChatActivity.class);
 
         intent = getIntent();
         mapDirIntent = new Intent(getApplicationContext(),mapDirectionActivity.class);
