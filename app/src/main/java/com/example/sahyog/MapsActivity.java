@@ -71,8 +71,8 @@ Log.i("parseINfo " , pro_service + pro_range + pro_maxweight + pro_username);
         provider.put("ServiceRange", 8);
        provider.put("MaximumWeight", 9 );
        Log.i("parseLOcInfo" , String.valueOf(latLong) );
-       provider.put("LocationLONG", latLong.longitude );
-        provider.put("LocationLAT", latLong.latitude );
+       provider.put("LocationLONG", latLngToBeStored.longitude );
+        provider.put("LocationLAT", latLngToBeStored.latitude );
 
         provider.saveInBackground(new SaveCallback() {
             @Override
@@ -92,36 +92,41 @@ Log.i("parseINfo " , pro_service + pro_range + pro_maxweight + pro_username);
 
     }
 
+
+
     public void ToastMaker(String string){
         Toast.makeText(MapsActivity.this, string , Toast.LENGTH_SHORT).show();
     }
 
+
+
+
     public void UpdateLocationChangeInfo(Location location) {
             buttonAddPos.setVisibility(View.VISIBLE);
 
-        latLong = new LatLng(location.getLatitude(), location.getLongitude());
-        mMap.clear();
-        mMap.addMarker(new MarkerOptions().position(latLong));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLong));
-        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
+            latLong = new LatLng(location.getLatitude(), location.getLongitude());
+            mMap.clear();
+            mMap.addMarker(new MarkerOptions().position(latLong));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLong));
+            mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                @Override
+                public void onMapClick(LatLng latLng) {
 
-                mMap.clear();
-                mMap.addMarker(new MarkerOptions().position((latLng)));
-                Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
-                try {
-                    List<Address> addressList = geocoder.getFromLocation(latLng.latitude,latLng.longitude,1);
-                    addressLine2beStored = addressList.get(0).getAddressLine(0);
-                    ToastMaker(addressLine2beStored);
-                    latLngToBeStored = latLng;
+                    mMap.clear();
+                    mMap.addMarker(new MarkerOptions().position((latLng)));
+                    Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+                    try {
+                        List<Address> addressList = geocoder.getFromLocation(latLng.latitude,latLng.longitude,1);
+                        addressLine2beStored = addressList.get(0).getAddressLine(0);
+                        ToastMaker(addressLine2beStored);
+                        latLngToBeStored = latLng;
 
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                 }
-
-            }
-        });
+            });
         Log.i("info", location.toString());
         Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
         try {
@@ -132,6 +137,8 @@ Log.i("parseINfo " , pro_service + pro_range + pro_maxweight + pro_username);
             e.printStackTrace();
         }
     }
+
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

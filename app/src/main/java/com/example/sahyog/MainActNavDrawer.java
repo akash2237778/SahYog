@@ -40,6 +40,9 @@ public class MainActNavDrawer extends AppCompatActivity
     RecyclerView recyclerView;
     Intent proposalActivityIntent;
     Intent mapDirectionIntent;
+    Double Latitude;
+    Double Longitude;
+
 ArrayList<String> arrayListToStoreUserData = new ArrayList<>();
 //ArrayAdapter arrayAdapterForStoreUserData;
 
@@ -91,8 +94,8 @@ ArrayList<String> arrayListToStoreUserData = new ArrayList<>();
                         for(ParseObject UserInfo : objects){
                             String userName = UserInfo.getString("username");
                             String userService = UserInfo.getString("service");
-                            Double Latitude = UserInfo.getDouble("LocationLAT");
-                            Double Longitude = UserInfo.getDouble("LocationLONG");
+                            Latitude = UserInfo.getDouble("LocationLAT");
+                            Longitude = UserInfo.getDouble("LocationLONG");
                             Log.i("ParseInfo :" , userService + String.valueOf(Latitude));
                             userServiceArr[i] = userService;
                             userCurAddressArr[i] = GeocoderProg(Latitude,Longitude);
@@ -121,6 +124,8 @@ ArrayList<String> arrayListToStoreUserData = new ArrayList<>();
                 new RecyclerItemClickListener(getApplicationContext(), recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
                          proposalActivityIntent.putExtra("userNames" , names[position]);
+                         proposalActivityIntent.putExtra("lat" ,Latitude );
+                         proposalActivityIntent.putExtra("long",Longitude);
                          //mapDirectionIntent.putExtra("userNames",names[position]);
                         startActivity(proposalActivityIntent);
 
