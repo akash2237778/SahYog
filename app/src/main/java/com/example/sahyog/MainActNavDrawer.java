@@ -42,6 +42,8 @@ public class MainActNavDrawer extends AppCompatActivity
     Intent mapDirectionIntent;
     Double Latitude;
     Double Longitude;
+    Double[] LatitudeArr;
+    Double[] LongitudeArr;
 
 ArrayList<String> arrayListToStoreUserData = new ArrayList<>();
 //ArrayAdapter arrayAdapterForStoreUserData;
@@ -79,6 +81,9 @@ ArrayList<String> arrayListToStoreUserData = new ArrayList<>();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_act_nav_drawer);
 
+        LatitudeArr = new Double[10];
+        LongitudeArr = new Double[10];
+
         proposalActivityIntent = new Intent(getApplicationContext(),ProposalViewActivity.class);
        // mapDirectionIntent = new Intent(getApplicationContext(),mapDirectionActivity.class);
 
@@ -99,7 +104,8 @@ ArrayList<String> arrayListToStoreUserData = new ArrayList<>();
                             Log.i("ParseInfo :" , userService + String.valueOf(Latitude));
                             userServiceArr[i] = userService;
                             userCurAddressArr[i] = GeocoderProg(Latitude,Longitude);
-
+                            LatitudeArr[i]=Latitude;
+                            LongitudeArr[i] = Longitude;
 
 
                            names[i] = userName;
@@ -124,8 +130,8 @@ ArrayList<String> arrayListToStoreUserData = new ArrayList<>();
                 new RecyclerItemClickListener(getApplicationContext(), recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
                          proposalActivityIntent.putExtra("userNames" , names[position]);
-                         proposalActivityIntent.putExtra("lat" ,Latitude );
-                         proposalActivityIntent.putExtra("long",Longitude);
+                         proposalActivityIntent.putExtra("lat" ,LatitudeArr[position] );
+                         proposalActivityIntent.putExtra("long",LongitudeArr[position]);
                          //mapDirectionIntent.putExtra("userNames",names[position]);
                         startActivity(proposalActivityIntent);
 
