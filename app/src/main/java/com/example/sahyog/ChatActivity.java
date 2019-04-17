@@ -1,6 +1,7 @@
 package com.example.sahyog;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,6 +21,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
+
+    Handler mHandler;
+    private final Runnable m_Runnable = new Runnable()
+    {
+        public void run()
+
+        {
+            Toast.makeText(ChatActivity.this,"in runnable",Toast.LENGTH_SHORT).show();
+
+            ChatActivity.this.mHandler.postDelayed(m_Runnable, 5000);
+        }
+
+    };
+
 
     String activeUser="";
     ArrayList<String>msgs=new ArrayList();
@@ -60,6 +75,10 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         Intent intent=getIntent();
+
+        this.mHandler = new Handler();
+
+        this.mHandler.postDelayed(m_Runnable,5000);
 
         //activeUser=intent.getStringExtra("username");
         activeUser="Akanksha";
