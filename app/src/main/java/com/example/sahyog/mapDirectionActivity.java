@@ -9,6 +9,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -16,6 +17,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -49,13 +51,22 @@ public class mapDirectionActivity extends FragmentActivity implements OnMapReady
     LocationManager locationManager;
     LocationListener locationListener;
     Location locationSet;
+    Button buttonAddPos;
+
+
+    public void AddPosition(View view){
+        Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                Uri.parse("http://maps.google.com/maps?saddr="+latLong.latitude +"," + latLong.longitude +"&daddr="+Latitude+","+Longitude));
+        startActivity(intent);
+    }
+
 
     public void ToastMaker(String string){
         Toast.makeText(mapDirectionActivity.this, string , Toast.LENGTH_SHORT).show();
     }
 
     public void UpdateLocationChangeInfo(Location location) {
-      //  buttonAddPos.setVisibility(View.VISIBLE);
+         buttonAddPos.setVisibility(View.VISIBLE);
 
         latLong = new LatLng(location.getLatitude(), location.getLongitude());
 
@@ -112,6 +123,7 @@ public class mapDirectionActivity extends FragmentActivity implements OnMapReady
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        buttonAddPos = findViewById(R.id.buttonAddPosition2);
 
         mapDirIntent = getIntent();
         userName = mapDirIntent.getStringExtra("userName");
