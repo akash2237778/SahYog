@@ -1,6 +1,8 @@
 package com.example.sahyog;
 
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -19,6 +21,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -26,19 +29,51 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
 public class MainActNavDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     RecyclerView recyclerView;
+    Intent proposalActivityIntent;
+    Intent mapDirectionIntent;
+    Double Latitude;
+    Double Longitude;
+    Double[] LatitudeArr;
+    Double[] LongitudeArr;
+    int SIZE;
+
 ArrayList<String> arrayListToStoreUserData = new ArrayList<>();
 //ArrayAdapter arrayAdapterForStoreUserData;
-String[] names   = {"user1", "user2" , ""};
-    String[] userServiceArr = {"", "" , ""};
-    String[] userCurAddressArr = {"", "" , ""};
 
+    String[] names;
+    String[] userServiceArr;
+    String[] userCurAddressArr;
+
+
+    String addressLine2beStored;
+
+
+
+
+
+
+    public String GeocoderProg(Double Latitude , Double Longitude){
+        Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+        try {
+            List<Address> addressList = geocoder.getFromLocation(Latitude,Longitude,1);
+            addressLine2beStored = addressList.get(0).getAddressLine(0);
+            Toast.makeText(MainActNavDrawer.this, addressLine2beStored , Toast.LENGTH_SHORT).show();
+            return  addressLine2beStored;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "Error while geocoding location";
+    }
 
 
 
@@ -48,6 +83,8 @@ String[] names   = {"user1", "user2" , ""};
         setContentView(R.layout.activity_main_act_nav_drawer);
 
 
+        proposalActivityIntent = new Intent(getApplicationContext(),ProposalViewActivity.class);
+       // mapDirectionIntent = new Intent(getApplicationContext(),mapDirectionActivity.class);
 
         ParseQuery<ParseObject> queryForUsername = ParseQuery.getQuery("ServiceProvider");
         //queryForUsername.whereNotEqualTo("username" , ParseUser.getCurrentUser().getUsername() );
@@ -56,15 +93,26 @@ String[] names   = {"user1", "user2" , ""};
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
                 if(e == null){
+                    SIZE = objects.size();
+                    LatitudeArr = new Double[SIZE];
+                    LongitudeArr = new Double[SIZE];
+                    names = new String[SIZE];
+                    userServiceArr = new String[SIZE];
+                    userCurAddressArr = new String[SIZE];
+
                     if(objects.size()>0){
                         int i=0;
                         for(ParseObject UserInfo : objects){
                             String userName = UserInfo.getString("username");
                             String userService = UserInfo.getString("service");
-                            String userCurAddress = UserInfo.getString("CurLocation");
-                            Log.i("ParseInfo :" , userService + userCurAddress);
+                            Latitude = UserInfo.getDouble("LocationLAT");
+                            Longitude = UserInfo.getDouble("LocationLONG");
+                            Log.i("ParseInfo :" , userService + String.valueOf(Latitude));
                             userServiceArr[i] = userService;
-                            userCurAddressArr[i] = userCurAddress;
+                            userCurAddressArr[i] = GeocoderProg(Latitude,Longitude);
+                            LatitudeArr[i]=Latitude;
+                            LongitudeArr[i] = Longitude;
+
 
                            names[i] = userName;
                             i++;
@@ -84,6 +132,22 @@ String[] names   = {"user1", "user2" , ""};
         recyclerView = (RecyclerView)findViewById(R.id.RecyclerView);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(getApplicationContext(), recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, int position) {
+                         proposalActivityIntent.putExtra("userNames" , names[position]);
+                         proposalActivityIntent.putExtra("lat" ,LatitudeArr[position] );
+                         proposalActivityIntent.putExtra("long",LongitudeArr[position]);
+                         //mapDirectionIntent.putExtra("userNames",names[position]);
+                        startActivity(proposalActivityIntent);
+
+                    }
+
+                    @Override public void onLongItemClick(View view, int position) {
+                        // do whatever
+                    }
+                })
+        );
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -126,6 +190,7 @@ String[] names   = {"user1", "user2" , ""};
         return true;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -150,11 +215,7 @@ String[] names   = {"user1", "user2" , ""};
         if (id == R.id.menuitem_provide) {
 
 
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
+        }  else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
 

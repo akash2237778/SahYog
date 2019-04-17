@@ -2,6 +2,7 @@ package com.example.sahyog;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -37,53 +38,28 @@ public class ProvideService extends AppCompatActivity {
     TextView ET_curloc;
     EditText ET_range;
     EditText ET_maxweight;
+    Intent mapActivityIntent;
 
 //<<<<<<< akansha
     String pro_username,pro_service, pro_peraddress, pro_curloc;
     double pro_range,pro_maxweight;
 //=======
-    LocationManager locationManager;
-    LocationListener locationListener;
+
     TextView textViewAddress;
     String address = "Last Location";
+
 //>>>>>>> Dev_akash
 
 
 
-    public void setTextViewInfo( TextView textView ,String toBeTyped){
-        textView.setText(toBeTyped);
-    }
 
-    public void updateLocationInfo(Location location){
-        Log.i("info", location.toString());
-
-       // Toast.makeText(ProvideService.this, address, Toast.LENGTH_SHORT).show();
-        Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
-        try {
-            List<Address> listOfGeocoder  = geocoder.getFromLocation(location.getLatitude(),location.getLongitude(),1);
-            address = listOfGeocoder.get(0).getAddressLine(0);
-            Log.i("info " , " geocoder successful " + address);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-    public void startListening(){
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 10, locationListener);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            startListening();
-        }
-    }
     public void getProLoc(View view) {
-        setTextViewInfo(textViewAddress,address);
+
+        mapActivityIntent.putExtra("pro_service",ET_service.getText().toString());
+        mapActivityIntent.putExtra("pro_range",Double.parseDouble(ET_range.getText().toString()));
+        mapActivityIntent.putExtra("pro_maxweight",Double.parseDouble(ET_maxweight.getText().toString()));
+
+        startActivity(mapActivityIntent);
 
 
     }
@@ -130,61 +106,25 @@ public class ProvideService extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_provide_service);
 
+        mapActivityIntent = new Intent(getApplicationContext(),MapsActivity.class);
+
+
+
+
 
          ET_service=findViewById(R.id.txtservice);
-         ET_peraddress=findViewById(R.id.txtadd);
+
 //<<<<<<< akansha
-   //      ET_curloc=findViewById(R.id.txtcurlocation);
+
 //=======
-         ET_curloc=findViewById(R.id.txtcurlocaion);
+
 //>>>>>>> Dev_akash
          ET_range=findViewById(R.id.txtrange);
          ET_maxweight=findViewById(R.id.txtweight);
-        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
 
-        textViewAddress = (TextView)findViewById(R.id.txtcurlocaion) ;
 
 
-        locationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-
-                updateLocationInfo(location);
-
-
-                // setTextViewInfo(textViewLatitude, String.valueOf(location.getLatitude()));
-               // setTextViewInfo(textViewLongitude,String.valueOf(location.getLongitude()));
-               // setTextViewInfo(textViewSpeed,String.valueOf(location.getSpeed())+" meters/sec");
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-
-            }
-        };
-
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
-        }
-        else {
-
-            startListening();
-            Location lastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            updateLocationInfo(lastLocation);
-
-        }
 
 
     }

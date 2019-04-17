@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1044458049235",
+    "firebase_url": "https://sahyog2-dc3fd.firebaseio.com",
+    "project_id": "sahyog2-dc3fd",
+    "storage_bucket": "sahyog2-dc3fd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1044458049235:android:b09d8ae5fbca2799",
+        "android_client_info": {
+          "package_name": "com.back4app.quickstartexampleapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1044458049235-5d8ujfctt69m2rjluuuvnv8ui6hh1kne.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.back4app.quickstartexampleapp",
+            "certificate_hash": "90f301bf3dac128a3a8b2fa0e403636672fe4cc6"
+          }
+        },
+        {
+          "client_id": "1044458049235-4147tk0ar4o606e9jl9rul06e9q0m73i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrCWKoZoqzee5n86e0cg_QOT1HyvNBkdc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1044458049235-4147tk0ar4o606e9jl9rul06e9q0m73i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
