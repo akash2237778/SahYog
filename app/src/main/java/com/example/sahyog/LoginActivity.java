@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
@@ -22,6 +23,7 @@ public class LoginActivity extends AppCompatActivity {
         loginUsrNme = logInUsrNmeText.getText().toString();
         loginPass = logInPassText.getText().toString();
 
+
         ParseUser.logInInBackground(loginUsrNme, loginPass, new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {
@@ -29,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
                     Log.i("logIn ", "Successful");
                     startActivity(MainNavDrawerIntent);
                 }else{
+                    Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     Log.i("logIn ", "unSuccessful  " + e.getMessage() );
                 }
             }

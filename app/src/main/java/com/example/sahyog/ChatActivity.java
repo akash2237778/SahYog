@@ -29,6 +29,9 @@ public class ChatActivity extends AppCompatActivity {
     String activeUser="";
     ArrayList<String>msgs=new ArrayList();
     ArrayAdapter arrayAdapter;
+    List<ParseQuery<ParseObject>> queries;
+
+
     public void sendChat(View view)
     {
         final EditText txtchat=(EditText)findViewById(R.id.txtchat);
@@ -66,15 +69,22 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
         Intent intent=getIntent();
 
+//<<<<<<< updateRecyclerView
 
         //activeUser=intent.getStringExtra("username");
-        activeUser="Akash";
-        setTitle("Chat with"+activeUser);
+        //activeUser="Akash";
+        //setTitle("Chat with"+activeUser);
+//=====
+        activeUser=intent.getStringExtra("userName");
+        setTitle("Chat with "+activeUser);
+//>>>>>>> Dev_akash
 
         ListView chatListView=(ListView)findViewById(R.id.chatListView);
         arrayAdapter=new ArrayAdapter(this,android.R.layout.simple_list_item_1,msgs);
 
         chatListView.setAdapter(arrayAdapter);
+
+
 
         ParseQuery<ParseObject> query1=new ParseQuery<ParseObject>("Message");
 
@@ -86,56 +96,50 @@ public class ChatActivity extends AppCompatActivity {
         query2.whereEqualTo("recipient",ParseUser.getCurrentUser().getUsername());
         query2.whereEqualTo("sender",activeUser);
 
-        List<ParseQuery<ParseObject>> queries=new ArrayList<ParseQuery<ParseObject>>();
+        queries=new ArrayList<ParseQuery<ParseObject>>();
         queries.add(query1);
         queries.add(query2);
 
-        ParseQuery<ParseObject> query=ParseQuery.or(queries);
 
-        query.orderByAscending("createdAt");
+                ParseQuery<ParseObject> query=ParseQuery.or(queries);
+                query.orderByAscending("createdAt");
+                query.findInBackground(new FindCallback<ParseObject>() {
+                    @Override
+                    public void done(List<ParseObject> objects, ParseException e) {
+                        if(e==null){
+                            if(objects.size()>0){
 
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> objects, ParseException e) {
-                if(e==null){
+                                for(ParseObject message:objects){
+                                    String messageContent=message.getString("message");
+                                    if(!message.getString("sender").equals(ParseUser.getCurrentUser().getUsername())){
+                                        messageContent="> "+messageContent;
+                                    }
+                                    msgs.add(messageContent);
+                                }
+                                arrayAdapter.notifyDataSetChanged();
 
-
-                    {temp(objects);
-                    /*if(objects.size()>0){
-
-                        for(ParseObject message:objects){
-                            Toast.makeText(ChatActivity.this,"in done",Toast.LENGTH_SHORT).show();
-                            String messageContent=message.getString("message");
-                            if(!message.getString("sender").equals(ParseUser.getCurrentUser().getUsername())){
-                                messageContent="> "+messageContent;
+//<<<<<<< updateRecyclerView
+        //=======
+//>>>>>>> Dev_akash
                             }
-                            msgs.add(messageContent);
                         }
-                        arrayAdapter.notifyDataSetChanged();
 
-                    }*/}
-                }
-            }
+
+//<<<<<<< updateRecyclerView
+                   
+                
+            
         });
        
 
 }
-    public void temp(List<ParseObject> objects)
-    {if(objects.size()>0){
-
-        for(ParseObject message:objects){
-            Toast.makeText(ChatActivity.this,"in done",Toast.LENGTH_SHORT).show();
-            String messageContent=message.getString("message");
-            if(!message.getString("sender").equals(ParseUser.getCurrentUser().getUsername())){
-                messageContent="> "+messageContent;
-            }
-            msgs.add(messageContent);
-        }
-        arrayAdapter.notifyDataSetChanged();
-
-    }}
-
-
-
+    
 }
+
+
+
+
+    
+//>>>>>>> Dev_akash
+
 
