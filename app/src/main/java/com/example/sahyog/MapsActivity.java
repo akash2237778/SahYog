@@ -34,6 +34,7 @@ import com.parse.SaveCallback;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -55,6 +56,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     String pro_username,pro_service, pro_peraddress, pro_curloc;
     String pro_range,pro_maxweight;
     Intent mapActivityIntent;
+    String Service_Date;
+    String Service_Time;
 
 
 
@@ -68,8 +71,9 @@ Log.i("parseINfo " , pro_service + pro_range + pro_maxweight + pro_username);
 
         provider.put("username",pro_username);
         provider.put("service",pro_service);
-        provider.put("ServiceRange", 8);
        provider.put("MaximumWeight", 9 );
+        provider.put("Time",Service_Time);
+        provider.put("Date",Service_Date);
        provider.put("LocationLONG", latLngToBeStored.longitude );
         provider.put("LocationLAT", latLngToBeStored.latitude );
 
@@ -171,10 +175,11 @@ Log.i("parseINfo " , pro_service + pro_range + pro_maxweight + pro_username);
 
 
         pro_service = mapActivityIntent.getStringExtra("pro_service");
-        pro_range = mapActivityIntent.getStringExtra("pro_range");
+       // pro_range = mapActivityIntent.getStringExtra("pro_range");
         pro_maxweight = mapActivityIntent.getStringExtra("pro_maxweight");
         pro_username= String.valueOf(ParseUser.getCurrentUser().getUsername());
-
+        Service_Date = mapActivityIntent.getStringExtra("Date");
+        Service_Time = mapActivityIntent.getStringExtra("Time");
 
         FormCallbackIntent = new Intent(getApplicationContext(),ProvideService.class);
 

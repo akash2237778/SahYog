@@ -31,12 +31,7 @@ public class MainActivity extends AppCompatActivity {
     Intent loginIntent;
     Intent chngeIntent;
 
-    Intent chatActIntent;
 
-public void callChat(View view)
-{
-    startActivity(chatActIntent);
-}
 
     public void SignUp (String name,String usrnme , String password, String phoneNo){
         user = new ParseUser();
@@ -101,9 +96,9 @@ public void onClickSignUp (View view){
 
         loginIntent = new Intent(getApplicationContext(),LoginActivity.class);
 
-         chngeIntent = new Intent(getApplicationContext(),MainActNavDrawer.class);
+         chngeIntent = new Intent(getApplicationContext(),myProvideServices.class);
 
-         chatActIntent=new Intent(getApplicationContext(),ChatActivity.class);
+
 
 
     }

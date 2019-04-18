@@ -29,16 +29,20 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.IOException;
+import java.sql.Time;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 public class ProvideService extends AppCompatActivity {
     EditText ET_service;
-    EditText ET_peraddress;
-    TextView ET_curloc;
     EditText ET_range;
     EditText ET_maxweight;
     Intent mapActivityIntent;
+    EditText DateView;
+    EditText TimeView;
+    String Service_Date;
+    String Service_Time;
 
 //<<<<<<< akansha
     String pro_username,pro_service, pro_peraddress, pro_curloc;
@@ -56,8 +60,10 @@ public class ProvideService extends AppCompatActivity {
     public void getProLoc(View view) {
 
         mapActivityIntent.putExtra("pro_service",ET_service.getText().toString());
-        mapActivityIntent.putExtra("pro_range",Double.parseDouble(ET_range.getText().toString()));
+        //mapActivityIntent.putExtra("pro_range",Double.parseDouble(ET_range.getText().toString()));
         mapActivityIntent.putExtra("pro_maxweight",Double.parseDouble(ET_maxweight.getText().toString()));
+        mapActivityIntent.putExtra("Time",TimeView.getText().toString());
+       mapActivityIntent.putExtra("Date",DateView.getText().toString());
 
         startActivity(mapActivityIntent);
 
@@ -68,10 +74,10 @@ public class ProvideService extends AppCompatActivity {
     public void proFormSubmit(View view)
     {
         pro_service = ET_service.getText().toString();
-        pro_peraddress = ET_peraddress.getText().toString();
-        pro_curloc = ET_curloc.getText().toString();
         pro_range = Double.parseDouble(ET_range.getText().toString());
         pro_maxweight = Double.parseDouble(ET_maxweight.getText().toString());
+        Service_Date = DateView.getText().toString();
+        Service_Time = TimeView.getText().toString();
 
         ParseObject provider= new ParseObject("ServiceProvider");
 
@@ -79,9 +85,10 @@ public class ProvideService extends AppCompatActivity {
 
         provider.put("username",pro_username);
         provider.put("service",pro_service);
-        provider.put("PerAddress",pro_peraddress);
-        provider.put("CurLocation",pro_curloc);
-        provider.put("ServiceRange",pro_range);
+       // provider.put("ServiceRange",pro_range);
+        provider.put("Time",Service_Time);
+        provider.put("Date",Service_Date);
+        provider.put("ConfirmStatus",0);
 //<<<<<<< akansha
         provider.put("MaximumWeight",pro_maxweight);
     //
@@ -119,9 +126,10 @@ public class ProvideService extends AppCompatActivity {
 //=======
 
 //>>>>>>> Dev_akash
-         ET_range=findViewById(R.id.txtrange);
+        // ET_range=findViewById(R.id.txtrange);
          ET_maxweight=findViewById(R.id.txtweight);
-
+         DateView = findViewById(R.id.DateView);
+         TimeView = findViewById(R.id.TimeView);
 
 
 
