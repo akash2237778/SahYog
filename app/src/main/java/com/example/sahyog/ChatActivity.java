@@ -69,9 +69,91 @@ public class ChatActivity extends AppCompatActivity {
         pullToRefresh = (SwipeRefreshLayout) findViewById(R.id.swipeToRefresh);
         arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, msgs);
 
+
+
+
+
+        Intent intent = getIntent();
+        activeUser = intent.getStringExtra("userName");
+        setTitle("Chat with " + activeUser);
+
+
+        ListView chatListView = (ListView) findViewById(R.id.chatListView);
+        //arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, msgs);
+
+        chatListView.setAdapter(arrayAdapter);
+
+
+
+
+        ParseQuery<ParseObject> query1=new ParseQuery<ParseObject>("Message");
+
+        query1.whereEqualTo("sender",ParseUser.getCurrentUser().getUsername());
+        query1.whereEqualTo("recipient",activeUser);
+
+        ParseQuery<ParseObject> query2=new ParseQuery<ParseObject>("Message");
+
+        query2.whereEqualTo("recipient",ParseUser.getCurrentUser().getUsername());
+        query2.whereEqualTo("sender",activeUser);
+
+        queries=new ArrayList<ParseQuery<ParseObject>>();
+        queries.add(query1);
+        queries.add(query2);
+
+
+        ParseQuery<ParseObject> query=ParseQuery.or(queries);
+
+
+        query.orderByAscending("createdAt");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if(e==null){
+
+
+
+                    if(objects.size()>0){
+
+
+                        for(ParseObject message:objects){
+
+                            String messageContent=message.getString("message");
+                            if(!message.getString("sender").equals(ParseUser.getCurrentUser().getUsername())){
+                                messageContent="> "+messageContent;
+
+                            }
+                            msgs.add(messageContent);
+                        }
+                        arrayAdapter.notifyDataSetChanged();
+//comment
+                    }
+                }
+
+
+            }
+
+
+        });
+
+       /*
+       final Handler handler =new Handler();
+        Runnable run = new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(getApplicationContext(),ChatActivity.class);
+                startActivity(intent);
+                handler.postDelayed(this,5000);
+            }
+        };
+        handler.post(run);
+*/
+        msgs.clear();
+
+
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+
 
                 Intent intent = getIntent();
                 activeUser = intent.getStringExtra("userName");
@@ -147,7 +229,7 @@ public class ChatActivity extends AppCompatActivity {
         };
         handler.post(run);
 */
-
+                msgs.clear();
                 pullToRefresh.setRefreshing(false);
             }
         });
