@@ -22,18 +22,8 @@ import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
 
-    Handler mHandler;
-    private final Runnable m_Runnable = new Runnable()
-    {
-        public void run()
+   Handler mHandler;
 
-        {
-            Toast.makeText(ChatActivity.this,"in runnable",Toast.LENGTH_SHORT).show();
-
-            ChatActivity.this.mHandler.postDelayed(m_Runnable, 5000);
-        }
-
-    };
 
 
     String activeUser="";
@@ -76,12 +66,9 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
         Intent intent=getIntent();
 
-        this.mHandler = new Handler();
-
-        this.mHandler.postDelayed(m_Runnable,5000);
 
         //activeUser=intent.getStringExtra("username");
-        activeUser="Akanksha";
+        activeUser="Akash";
         setTitle("Chat with"+activeUser);
 
         ListView chatListView=(ListView)findViewById(R.id.chatListView);
@@ -111,9 +98,13 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
                 if(e==null){
-                    if(objects.size()>0){
+
+
+                    {temp(objects);
+                    /*if(objects.size()>0){
 
                         for(ParseObject message:objects){
+                            Toast.makeText(ChatActivity.this,"in done",Toast.LENGTH_SHORT).show();
                             String messageContent=message.getString("message");
                             if(!message.getString("sender").equals(ParseUser.getCurrentUser().getUsername())){
                                 messageContent="> "+messageContent;
@@ -122,10 +113,44 @@ public class ChatActivity extends AppCompatActivity {
                         }
                         arrayAdapter.notifyDataSetChanged();
 
-                    }
+                    }*/}
                 }
             }
         });
+        this.mHandler = new Handler();
+        this.mHandler.postDelayed(m_Runnable,5000);
 
 }
+    public void temp(List<ParseObject> objects)
+    {if(objects.size()>0){
+
+        for(ParseObject message:objects){
+            Toast.makeText(ChatActivity.this,"in done",Toast.LENGTH_SHORT).show();
+            String messageContent=message.getString("message");
+            if(!message.getString("sender").equals(ParseUser.getCurrentUser().getUsername())){
+                messageContent="> "+messageContent;
+            }
+            msgs.add(messageContent);
+        }
+        arrayAdapter.notifyDataSetChanged();
+
+    }}
+
+
+    private final Runnable m_Runnable = new Runnable()
+    {
+        public void run()
+
+        {
+            List<ParseObject> objects;
+            //temp( objects);
+            //Toast.makeText(ChatActivity.this,"in runnable",Toast.LENGTH_SHORT).show();
+
+            ChatActivity.this.mHandler.postDelayed(m_Runnable, 30000);
+
+
+        }
+
+    };
 }
+
