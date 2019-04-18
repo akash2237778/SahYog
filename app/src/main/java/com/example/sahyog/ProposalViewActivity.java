@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
@@ -21,6 +23,31 @@ public class ProposalViewActivity extends AppCompatActivity {
     Intent chatActIntent;
     String objid;
     String ProviderUserName;
+    int Status;
+    ImageView statusImageView;
+    TextView statusTextView;
+
+    public void StatusTextViewSetter(int a){
+        String statusString;
+        statusString = "NULL";
+
+        if(a==0){
+            statusString = "Status : Unoccupied";
+            statusImageView.setImageResource(R.drawable.bulebutton);
+        }
+        else if(a==1){
+            statusString = "Status : Confirmed";
+            statusImageView.setImageResource(R.drawable.yellowbutton);
+        }else if(a==2){
+            statusString = "Status : Completed";
+            statusImageView.setImageResource(R.drawable.greenbutton);
+        }else{
+            statusString = "Status : ERROR";
+        }
+
+        statusTextView.setText(statusString);
+
+    }
 
 
     public void callChat(View view)
@@ -59,13 +86,15 @@ public class ProposalViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_proposal_view);
 
-
+        statusImageView = findViewById(R.id.statusImageViewPA);
+        statusTextView = findViewById(R.id.statusViewPA);
 
         chatActIntent=new Intent(getApplicationContext(),ChatActivity.class);
 
         intent = getIntent();
         mapDirIntent = new Intent(getApplicationContext(),mapDirectionActivity.class);
         objid = intent.getStringExtra("ObjectId");
+        Status = intent.getIntExtra("Status" , 0);
 
         chatActIntent.putExtra("userName", intent.getStringExtra("userNames"));
         ProviderUserName = String.valueOf(ParseUser.getCurrentUser().getUsername());
@@ -75,6 +104,8 @@ public class ProposalViewActivity extends AppCompatActivity {
         mapDirIntent.putExtra("userName", intent.getStringExtra("userNames"));
         mapDirIntent.putExtra("lat", intent.getDoubleExtra("lat",30.11));
         mapDirIntent.putExtra("long", intent.getDoubleExtra("long",30.11));
+
+        StatusTextViewSetter(Status);
 
     }
 }

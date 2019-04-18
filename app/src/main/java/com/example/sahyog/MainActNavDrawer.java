@@ -175,7 +175,7 @@ ArrayList<String> arrayListToStoreUserData = new ArrayList<>();
                          proposalActivityIntent.putExtra("lat" ,LatitudeArr[position] );
                          proposalActivityIntent.putExtra("long",LongitudeArr[position]);
                         proposalActivityIntent.putExtra("ObjectId", ObjectId[position]);
-
+                        proposalActivityIntent.putExtra("Status" , ImageStatusText[position]);
                          //mapDirectionIntent.putExtra("userNames",names[position]);
                         startActivity(proposalActivityIntent);
 
