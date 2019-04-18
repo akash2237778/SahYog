@@ -117,8 +117,7 @@ public class ChatActivity extends AppCompatActivity {
                 }
             }
         });
-        this.mHandler = new Handler();
-        this.mHandler.postDelayed(m_Runnable,5000);
+       
 
 }
     public void temp(List<ParseObject> objects)
@@ -137,20 +136,6 @@ public class ChatActivity extends AppCompatActivity {
     }}
 
 
-    private final Runnable m_Runnable = new Runnable()
-    {
-        public void run()
 
-        {
-            List<ParseObject> objects;
-            //temp( objects);
-            //Toast.makeText(ChatActivity.this,"in runnable",Toast.LENGTH_SHORT).show();
-
-            ChatActivity.this.mHandler.postDelayed(m_Runnable, 30000);
-
-
-        }
-
-    };
 }
 
