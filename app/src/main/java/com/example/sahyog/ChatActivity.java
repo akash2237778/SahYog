@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
-
+    SwipeRefreshLayout pullToRefresh;
     String activeUser="";
     ArrayList<String>msgs=new ArrayList();
     ArrayAdapter arrayAdapter;
@@ -66,7 +66,7 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-        final SwipeRefreshLayout pullToRefresh = findViewById(R.id.pullToRefresh);
+         pullToRefresh = (SwipeRefreshLayout) findViewById(R.id.swipeToRefresh);
         arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, msgs);
 
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -149,7 +149,7 @@ public class ChatActivity extends AppCompatActivity {
         handler.post(run);
 */
 
-                                                   pullToRefresh.setRefreshing(true);
+                                                   pullToRefresh.setRefreshing(false);
                                                }
         });
     }
