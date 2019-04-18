@@ -6,6 +6,7 @@ import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -48,6 +49,8 @@ public class MainActNavDrawer extends AppCompatActivity
     Intent intentMyProvideServices;
     Intent intentMyRecievedServices;
     int ConfrmStatus;
+    SwipeRefreshLayout pullToRefresh;
+
 
 
 ArrayList<String> arrayListToStoreUserData = new ArrayList<>();
@@ -90,7 +93,7 @@ ArrayList<String> arrayListToStoreUserData = new ArrayList<>();
         try {
             List<Address> addressList = geocoder.getFromLocation(Latitude,Longitude,1);
             addressLine2beStored = addressList.get(0).getAddressLine(0);
-            Toast.makeText(MainActNavDrawer.this, addressLine2beStored , Toast.LENGTH_SHORT).show();
+          //  Toast.makeText(MainActNavDrawer.this, addressLine2beStored , Toast.LENGTH_SHORT).show();
             return  addressLine2beStored;
 
         } catch (IOException e) {
@@ -105,6 +108,9 @@ ArrayList<String> arrayListToStoreUserData = new ArrayList<>();
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_act_nav_drawer);
+
+        pullToRefresh = (SwipeRefreshLayout) findViewById(R.id.swipeToRefresh2);
+
 
             intentMyProvideServices = new Intent(getApplicationContext(),myProvideServices.class);
             intentMyRecievedServices = new Intent(getApplicationContext(),MyRecievedServices.class);
@@ -187,6 +193,62 @@ ArrayList<String> arrayListToStoreUserData = new ArrayList<>();
                 })
         );
 
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                ParseQuery<ParseObject> queryForUsername = ParseQuery.getQuery("ServiceProvider");
+                //queryForUsername.whereNotEqualTo("username" , ParseUser.getCurrentUser().getUsername() );
+                queryForUsername.orderByDescending("createdAt");
+                queryForUsername.findInBackground(new FindCallback<ParseObject>() {
+                    @Override
+                    public void done(List<ParseObject> objects, ParseException e) {
+                        if(e == null){
+                            SIZE = objects.size();
+                            LatitudeArr = new Double[SIZE];
+                            LongitudeArr = new Double[SIZE];
+                            names = new String[SIZE];
+                            userServiceArr = new String[SIZE];
+                            userCurAddressArr = new String[SIZE];
+                            ObjectId = new String[SIZE];
+                            StatusText = new String[SIZE];
+                            ImageStatusText = new int[SIZE];
+
+
+                            if(objects.size()>0){
+                                int i=0;
+                                for(ParseObject UserInfo : objects){
+                                    String userName = UserInfo.getString("username");
+                                    String userService = UserInfo.getString("service");
+                                    ConfrmStatus = UserInfo.getInt("ConfirmStatus");
+                                    Latitude = UserInfo.getDouble("LocationLAT");
+                                    Longitude = UserInfo.getDouble("LocationLONG");
+                                    String ObjectID = UserInfo.getObjectId();
+                                    Log.i("ParseInfo :" , userService + String.valueOf(Latitude));
+                                    StatusText[i] = StatusTextViewSetter(ConfrmStatus);
+                                    ImageStatusText[i] = ConfrmStatus;
+                                    userServiceArr[i] = userService;
+                                    userCurAddressArr[i] = GeocoderProg(Latitude,Longitude);
+                                    LatitudeArr[i]=Latitude;
+                                    LongitudeArr[i] = Longitude;
+                                    ObjectId[i] = ObjectID;
+
+                                    names[i] = userName;
+
+                                    i++;
+                                    recyclerView.setAdapter(new AdapterProgram(names , userServiceArr , userCurAddressArr , StatusText, ImageStatusText));
+
+                                }
+
+                            }
+                        }
+                    }
+                });
+
+                pullToRefresh.setRefreshing(false);
+
+            }
+        });
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -258,7 +320,7 @@ ArrayList<String> arrayListToStoreUserData = new ArrayList<>();
 
         }
         else if (id == R.id.nav_share) {
-            Toast.makeText(MainActNavDrawer.this, "hiii", Toast.LENGTH_SHORT).show();
+         //  Toast.makeText(MainActNavDrawer.this, "hiii", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.nav_send) {
 
