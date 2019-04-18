@@ -28,6 +28,7 @@ public class ProposalViewActivity extends AppCompatActivity {
     ImageView statusImageView;
     TextView statusTextView;
     Button btnCnfrm;
+    String activeUserName;
 
     public void StatusTextViewSetter(int a){
         String statusString;
@@ -103,6 +104,7 @@ public class ProposalViewActivity extends AppCompatActivity {
 
         chatActIntent.putExtra("userName", intent.getStringExtra("userNames"));
         ProviderUserName = String.valueOf(ParseUser.getCurrentUser().getUsername());
+        activeUserName = intent.getStringExtra("userNames");
        //Double lat = intent.getDoubleExtra("lat",30.11);
         //Double long1 = intent.getDoubleExtra("long",30.11);
         //Log.i("ObjectID " , objid );
@@ -111,6 +113,11 @@ public class ProposalViewActivity extends AppCompatActivity {
         mapDirIntent.putExtra("long", intent.getDoubleExtra("long",30.11));
 
         StatusTextViewSetter(Status);
+
+        if(ProviderUserName.equals(activeUserName)){
+            btnCnfrm.setVisibility(View.INVISIBLE);
+        }
+
 
     }
 }
