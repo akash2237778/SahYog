@@ -45,6 +45,8 @@ public class MainActNavDrawer extends AppCompatActivity
     Double[] LatitudeArr;
     Double[] LongitudeArr;
     int SIZE;
+    Intent intentMyProvideServices;
+    Intent intentMyRecievedServices;
 
 ArrayList<String> arrayListToStoreUserData = new ArrayList<>();
 //ArrayAdapter arrayAdapterForStoreUserData;
@@ -83,6 +85,8 @@ ArrayList<String> arrayListToStoreUserData = new ArrayList<>();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_act_nav_drawer);
 
+            intentMyProvideServices = new Intent(getApplicationContext(),myProvideServices.class);
+            intentMyRecievedServices = new Intent(getApplicationContext(),MyRecievedServices.class);
 
         proposalActivityIntent = new Intent(getApplicationContext(),ProposalViewActivity.class);
        // mapDirectionIntent = new Intent(getApplicationContext(),mapDirectionActivity.class);
@@ -221,11 +225,14 @@ ArrayList<String> arrayListToStoreUserData = new ArrayList<>();
         int id = item.getItemId();
 
         if (id == R.id.menuitem_provide) {
+            startActivity(intentMyProvideServices);
 
+        }  else if (id == R.id.menuitem_recieve) {
+            startActivity(intentMyRecievedServices);
 
-        }  else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
+        }
+        else if (id == R.id.nav_share) {
+            Toast.makeText(MainActNavDrawer.this, "hiii", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.nav_send) {
 
