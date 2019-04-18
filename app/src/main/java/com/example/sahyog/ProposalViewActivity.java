@@ -118,6 +118,6 @@ public class ProposalViewActivity extends AppCompatActivity {
             btnCnfrm.setVisibility(View.INVISIBLE);
         }
 
-
+//initialCommentForBranchAkash_Saini
     }
 }
