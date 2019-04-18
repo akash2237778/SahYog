@@ -22,6 +22,10 @@ import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
 
+   Handler mHandler;
+
+
+
     String activeUser="";
     ArrayList<String>msgs=new ArrayList();
     ArrayAdapter arrayAdapter;
@@ -65,8 +69,15 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
         Intent intent=getIntent();
 
+//<<<<<<< updateRecyclerView
+
+        //activeUser=intent.getStringExtra("username");
+        //activeUser="Akash";
+        //setTitle("Chat with"+activeUser);
+//=====
         activeUser=intent.getStringExtra("userName");
         setTitle("Chat with "+activeUser);
+//>>>>>>> Dev_akash
 
         ListView chatListView=(ListView)findViewById(R.id.chatListView);
         arrayAdapter=new ArrayAdapter(this,android.R.layout.simple_list_item_1,msgs);
@@ -107,28 +118,28 @@ public class ChatActivity extends AppCompatActivity {
                                 }
                                 arrayAdapter.notifyDataSetChanged();
 
+//<<<<<<< updateRecyclerView
+        //=======
+//>>>>>>> Dev_akash
                             }
                         }
 
 
-                    }
+//<<<<<<< updateRecyclerView
+                   
+                
+            
+        });
+       
 
-                });
-
-       /*
-       final Handler handler =new Handler();
-        Runnable run = new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(getApplicationContext(),ChatActivity.class);
-                startActivity(intent);
-                handler.postDelayed(this,5000);
-            }
-        };
-
-        handler.post(run);
-*/
-
-
-    }
 }
+    
+}
+
+
+
+
+    
+//>>>>>>> Dev_akash
+
+

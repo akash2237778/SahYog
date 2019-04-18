@@ -111,6 +111,7 @@ ArrayList<String> arrayListToStoreUserData = new ArrayList<>();
                         for(ParseObject UserInfo : objects){
                             String userName = UserInfo.getString("username");
                             String userService = UserInfo.getString("service");
+
                             Latitude = UserInfo.getDouble("LocationLAT");
                             Longitude = UserInfo.getDouble("LocationLONG");
                             String ObjectID = UserInfo.getObjectId();
