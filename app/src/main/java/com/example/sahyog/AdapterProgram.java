@@ -15,12 +15,16 @@ public class AdapterProgram extends RecyclerView.Adapter<AdapterProgram.ProgramV
     private  String[] userNameData;
     private String[] userServiceData;
     private String[] userAddressData;
+    private String[] userStatusText;
+    private int[] userImageStatusText;
 
 
-    public AdapterProgram(String[] data , String[] ServiceData , String[] addressData){
+    public AdapterProgram(String[] data , String[] ServiceData , String[] addressData , String[] StatusText, int[] ImageStatusText){
         this.userNameData = data;
         this.userServiceData = ServiceData;
         this.userAddressData = addressData;
+        this.userStatusText = StatusText;
+        this.userImageStatusText = ImageStatusText;
     }
 
 
@@ -38,10 +42,15 @@ public class AdapterProgram extends RecyclerView.Adapter<AdapterProgram.ProgramV
         String name = userNameData[i];
         String service = userServiceData[i];
         String address = userAddressData[i];
+        String statusT = userStatusText[i];
+        int imageStatusT = userImageStatusText[i];
+
 
         programViewHolder.textView.setText(name);
         programViewHolder.textDataView.setText(service);
         programViewHolder.textAddressView.setText(address);
+        programViewHolder.textStatusView.setText(statusT);
+        programViewHolder.imgview.setImageResource(R.drawable.yellowbutton);
     }
 
     @Override
@@ -54,14 +63,16 @@ public class AdapterProgram extends RecyclerView.Adapter<AdapterProgram.ProgramV
         TextView textView;
         TextView textDataView;
         TextView textAddressView;
+        TextView textStatusView;
 
         public ProgramViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            imgview = (ImageView) itemView.findViewById(R.id.imageView2);
+            imgview = (ImageView) itemView.findViewById(R.id.statusImageView);
             textView = (TextView) itemView.findViewById(R.id.textView);
             textDataView = (TextView) itemView.findViewById(R.id.textView2);
             textAddressView = (TextView) itemView.findViewById(R.id.AddressTextView);
+            textStatusView = (TextView) itemView.findViewById(R.id.statusView);
 
         }
     }

@@ -41,6 +41,7 @@ public class myProvideServices extends AppCompatActivity {
     Double[] LatitudeArr;
     Double[] LongitudeArr;
     int SIZE;
+    int ConfrmStatus;
 
     ArrayList<String> arrayListToStoreUserData = new ArrayList<>();
 //ArrayAdapter arrayAdapterForStoreUserData;
@@ -49,13 +50,50 @@ public class myProvideServices extends AppCompatActivity {
     String[] userServiceArr;
     String[] userCurAddressArr;
     String[] ObjectId;
+    String[] StatusText;
+    int[] ImageStatusText;
 
 
     String addressLine2beStored;
 
 
+    public String StatusTextViewSetter(int a){
+        String statusString;
+        statusString = "NULL";
 
+        if(a==0){
+            statusString = "Status : Unoccupied";
+        }
+        else if(a==1){
+            statusString = "Status : Confirmed";
+        }else if(a==2){
+            statusString = "Status : Completed";
+        }else{
+            statusString = "Status : ERROR";
+        }
 
+        return statusString;
+
+    }
+    public int StatusImageViewSetter(int a){
+        int statusString;
+        statusString = 0;
+
+        if(a==0){
+            statusString = -700015;
+
+        }
+        else if(a==1){
+            statusString = -700022;
+        }else if(a==2){
+            statusString = -700089;
+        }else{
+            statusString = -700089;
+        }
+
+        return statusString;
+
+    }
 
 
     public String GeocoderProg(Double Latitude , Double Longitude){
@@ -84,7 +122,7 @@ public class myProvideServices extends AppCompatActivity {
         // mapDirectionIntent = new Intent(getApplicationContext(),mapDirectionActivity.class);
 
         ParseQuery<ParseObject> queryForUsername = ParseQuery.getQuery("ServiceProvider");
-        queryForUsername.whereEqualTo("ProviderUsername" , ParseUser.getCurrentUser().getUsername() );
+        queryForUsername.whereEqualTo("ProviderUserName" , ParseUser.getCurrentUser().getUsername() );
         queryForUsername.orderByDescending("createdAt");
         queryForUsername.findInBackground(new FindCallback<ParseObject>() {
             @Override
@@ -97,27 +135,32 @@ public class myProvideServices extends AppCompatActivity {
                     userServiceArr = new String[SIZE];
                     userCurAddressArr = new String[SIZE];
                     ObjectId = new String[SIZE];
+                    StatusText = new String[SIZE];
+                    ImageStatusText = new int[SIZE];
 
-                    if (objects.size() > 0) {
-                        int i = 0;
-                        for (ParseObject UserInfo : objects) {
+
+                    if(objects.size()>0){
+                        int i=0;
+                        for(ParseObject UserInfo : objects){
                             String userName = UserInfo.getString("username");
                             String userService = UserInfo.getString("service");
+                            ConfrmStatus = UserInfo.getInt("ConfirmStatus");
                             Latitude = UserInfo.getDouble("LocationLAT");
                             Longitude = UserInfo.getDouble("LocationLONG");
                             String ObjectID = UserInfo.getObjectId();
-                            Log.i("ParseInfo :", userService + String.valueOf(Latitude));
+                            Log.i("ParseInfo :" , userService + String.valueOf(Latitude));
+                            StatusText[i] = StatusTextViewSetter(ConfrmStatus);
+                            ImageStatusText[i] = StatusImageViewSetter(ConfrmStatus);
                             userServiceArr[i] = userService;
-                            userCurAddressArr[i] = GeocoderProg(Latitude, Longitude);
-                            LatitudeArr[i] = Latitude;
+                            userCurAddressArr[i] = GeocoderProg(Latitude,Longitude);
+                            LatitudeArr[i]=Latitude;
                             LongitudeArr[i] = Longitude;
                             ObjectId[i] = ObjectID;
 
                             names[i] = userName;
 
-
                             i++;
-                            recyclerView.setAdapter(new AdapterProgram(names, userServiceArr, userCurAddressArr));
+                            recyclerView.setAdapter(new AdapterProgram(names , userServiceArr , userCurAddressArr , StatusText, ImageStatusText));
 
                         }
 
