@@ -106,7 +106,7 @@ public class ChatActivity extends AppCompatActivity {
                                     msgs.add(messageContent);
                                 }
                                 arrayAdapter.notifyDataSetChanged();
-
+//comment
                             }
                         }
 
