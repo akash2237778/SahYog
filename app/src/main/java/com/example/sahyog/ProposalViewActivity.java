@@ -20,6 +20,8 @@ public class ProposalViewActivity extends AppCompatActivity {
 
     Intent chatActIntent;
     String objid;
+    String ProviderUserName;
+
 
     public void callChat(View view)
     {
@@ -35,6 +37,7 @@ public class ProposalViewActivity extends AppCompatActivity {
                                    @Override
                                    public void done(ParseObject object, ParseException e) {
                                        if(e==null && object!=null){
+                                           object.put("ProviderUserName",ProviderUserName );
                                            object.put("ConfirmStatus",1);
                                            object.saveInBackground();
                                        }
@@ -63,6 +66,9 @@ public class ProposalViewActivity extends AppCompatActivity {
         intent = getIntent();
         mapDirIntent = new Intent(getApplicationContext(),mapDirectionActivity.class);
         objid = intent.getStringExtra("ObjectId");
+
+        chatActIntent.putExtra("userName", intent.getStringExtra("userNames"));
+        ProviderUserName = String.valueOf(ParseUser.getCurrentUser().getUsername());
        //Double lat = intent.getDoubleExtra("lat",30.11);
         //Double long1 = intent.getDoubleExtra("long",30.11);
         //Log.i("ObjectID " , objid );

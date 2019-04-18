@@ -96,7 +96,7 @@ public void onClickSignUp (View view){
 
         loginIntent = new Intent(getApplicationContext(),LoginActivity.class);
 
-         chngeIntent = new Intent(getApplicationContext(),MainActNavDrawer.class);
+         chngeIntent = new Intent(getApplicationContext(),myProvideServices.class);
 
 
 
