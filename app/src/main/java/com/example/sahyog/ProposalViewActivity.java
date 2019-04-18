@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +27,7 @@ public class ProposalViewActivity extends AppCompatActivity {
     int Status;
     ImageView statusImageView;
     TextView statusTextView;
+    Button btnCnfrm;
 
     public void StatusTextViewSetter(int a){
         String statusString;
@@ -38,9 +40,11 @@ public class ProposalViewActivity extends AppCompatActivity {
         else if(a==1){
             statusString = "Status : Confirmed";
             statusImageView.setImageResource(R.drawable.yellowbutton);
+            btnCnfrm.setVisibility(View.INVISIBLE);
         }else if(a==2){
             statusString = "Status : Completed";
             statusImageView.setImageResource(R.drawable.greenbutton);
+            btnCnfrm.setVisibility(View.INVISIBLE);
         }else{
             statusString = "Status : ERROR";
         }
@@ -88,6 +92,7 @@ public class ProposalViewActivity extends AppCompatActivity {
 
         statusImageView = findViewById(R.id.statusImageViewPA);
         statusTextView = findViewById(R.id.statusViewPA);
+        btnCnfrm = findViewById(R.id.btnConfirm);
 
         chatActIntent=new Intent(getApplicationContext(),ChatActivity.class);
 
