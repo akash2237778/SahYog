@@ -76,25 +76,6 @@ public class MyRecievedServices extends AppCompatActivity {
         return statusString;
 
     }
-    public int StatusImageViewSetter(int a){
-        int statusString;
-        statusString = 0;
-
-        if(a==0){
-            statusString = -700015;
-
-        }
-        else if(a==1){
-            statusString = -700022;
-        }else if(a==2){
-            statusString = -700089;
-        }else{
-            statusString = -700089;
-        }
-
-        return statusString;
-
-    }
 
 
     public String GeocoderProg(Double Latitude , Double Longitude){
@@ -150,7 +131,7 @@ public class MyRecievedServices extends AppCompatActivity {
                             String ObjectID = UserInfo.getObjectId();
                             Log.i("ParseInfo :" , userService + String.valueOf(Latitude));
                             StatusText[i] = StatusTextViewSetter(ConfrmStatus);
-                            ImageStatusText[i] = StatusImageViewSetter(ConfrmStatus);
+                            ImageStatusText[i] = ConfrmStatus;
                             userServiceArr[i] = userService;
                             userCurAddressArr[i] = GeocoderProg(Latitude,Longitude);
                             LatitudeArr[i]=Latitude;

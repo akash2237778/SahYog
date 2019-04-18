@@ -50,8 +50,11 @@ public class AdapterProgram extends RecyclerView.Adapter<AdapterProgram.ProgramV
         programViewHolder.textDataView.setText(service);
         programViewHolder.textAddressView.setText(address);
         programViewHolder.textStatusView.setText(statusT);
-        programViewHolder.imgview.setImageResource(R.drawable.yellowbutton);
-    }
+
+        if(imageStatusT == 0){programViewHolder.imgview.setImageResource(R.drawable.bulebutton); }
+        else if(imageStatusT == 1){programViewHolder.imgview.setImageResource(R.drawable.yellowbutton); }
+        else if(imageStatusT == 2){programViewHolder.imgview.setImageResource(R.drawable.greenbutton); }
+         }
 
     @Override
     public int getItemCount() {
