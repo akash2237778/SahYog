@@ -52,6 +52,13 @@ public class LiveLocationActivity extends FragmentActivity implements OnMapReady
     String ObjIdParseServer;
     final Double[] Latitude = new Double[1];
     final Double[] Longitude = new Double[1];
+    String RecipUsrName;
+
+
+    public void GetRecipientName(String name){
+        RecipUsrName = name;
+
+    }
 
     public void blueMarkOnMap(Double Lat , Double Long){
 
@@ -78,8 +85,8 @@ public class LiveLocationActivity extends FragmentActivity implements OnMapReady
 
     public void InfoUpdatetoServer(Location locationToSet) {
 
-        livetrackerObj.put("CurUsrName", "Akash");
-        livetrackerObj.put("RecipientUsrName", "Akanksha");
+        livetrackerObj.put("CurUsrName", ParseUser.getCurrentUser().getUsername());
+        livetrackerObj.put("RecipientUsrName", RecipUsrName);
         livetrackerObj.put("LAT", locationToSet.getLatitude());
         livetrackerObj.put("LONG", locationToSet.getLongitude());
         ObjIdParseServer =  livetrackerObj.getObjectId();
@@ -122,6 +129,31 @@ public class LiveLocationActivity extends FragmentActivity implements OnMapReady
         livetrackerObj = new ParseObject("LiveLocation");
 
 
+        ParseQuery<ParseObject> queryForUsername = ParseQuery.getQuery("ServiceProvider");
+        queryForUsername.whereEqualTo("username" , ParseUser.getCurrentUser().getUsername() );
+        queryForUsername.whereEqualTo("ConfirmStatus", 1 );
+        queryForUsername.orderByDescending("createdAt");
+        queryForUsername.setLimit(1);
+        queryForUsername.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if (e == null) {
+                    if (objects.size() > 0) {
+                        int i = 0;
+                        for (ParseObject UserInfo : objects) {
+                            String RUsrName = UserInfo.getString("ProviderUserName");
+                            GetRecipientName(RUsrName);
+
+
+                        }
+                    }
+                }
+            }
+
+        });
+
+
+
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         locationListener = new LocationListener() {
             @Override
@@ -158,8 +190,8 @@ public class LiveLocationActivity extends FragmentActivity implements OnMapReady
 
 
         ParseQuery<ParseObject> queryForLocation = ParseQuery.getQuery("LiveLocation");
-        queryForLocation.whereEqualTo("CurUsrName", "Akanksha");
-        queryForLocation.whereEqualTo("RecipientUsrName", "Akash");
+        queryForLocation.whereEqualTo("CurUsrName", RecipUsrName);
+        queryForLocation.whereEqualTo("RecipientUsrName", ParseUser.getCurrentUser().getUsername());
         //queryForLocation.orderByDescending("createdAt");
         queryForLocation.setLimit(1);
         //queryForLocation.whereEqualTo("objectId",ObjIdParseServer);
