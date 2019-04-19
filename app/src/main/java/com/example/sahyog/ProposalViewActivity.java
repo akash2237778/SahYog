@@ -29,6 +29,12 @@ public class ProposalViewActivity extends AppCompatActivity {
     TextView statusTextView;
     Button btnCnfrm;
     String activeUserName;
+    Intent LiveLocationIntent;
+
+
+    public void OnclickLivelocation(View view){
+        startActivity(LiveLocationIntent);
+    }
 
     public void StatusTextViewSetter(int a){
         String statusString;
@@ -96,6 +102,7 @@ public class ProposalViewActivity extends AppCompatActivity {
         btnCnfrm = findViewById(R.id.btnConfirm);
 
         chatActIntent=new Intent(getApplicationContext(),ChatActivity.class);
+        LiveLocationIntent = new Intent(getApplicationContext() , LiveLocationActivity.class);
 
         intent = getIntent();
         mapDirIntent = new Intent(getApplicationContext(),mapDirectionActivity.class);
