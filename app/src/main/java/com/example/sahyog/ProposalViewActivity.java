@@ -51,7 +51,8 @@ public class ProposalViewActivity extends AppCompatActivity {
             statusString = "Status : Confirmed";
             statusImageView.setImageResource(R.drawable.yellowbutton);
             btnCnfrm.setVisibility(View.INVISIBLE);
-            LiveLocationBTN.setVisibility(View.VISIBLE);
+            if(activeUserName.equals(ParseUser.getCurrentUser().getUsername())){
+            LiveLocationBTN.setVisibility(View.VISIBLE);}
         }else if(a==2){
             statusString = "Status : Completed";
             statusImageView.setImageResource(R.drawable.greenbutton);
