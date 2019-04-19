@@ -119,9 +119,13 @@ public class ChatActivity extends AppCompatActivity {
 
                             String messageContent=message.getString("message");
                             if(!message.getString("sender").equals(ParseUser.getCurrentUser().getUsername())){
-                                messageContent="> "+messageContent;
+
+                                messageContent=activeUser+":  "+messageContent;
 
                             }
+                            else
+                                messageContent=ParseUser.getCurrentUser().getUsername()+":  "+messageContent;
+
                             msgs.add(messageContent);
                         }
                         arrayAdapter.notifyDataSetChanged();
@@ -201,9 +205,12 @@ public class ChatActivity extends AppCompatActivity {
 
                                     String messageContent=message.getString("message");
                                     if(!message.getString("sender").equals(ParseUser.getCurrentUser().getUsername())){
-                                        messageContent="> "+messageContent;
+
+                                        messageContent=activeUser+":  "+messageContent;
 
                                     }
+                                    else
+                                        messageContent=ParseUser.getCurrentUser().getUsername()+":  "+messageContent;
                                     msgs.add(messageContent);
                                 }
                                 arrayAdapter.notifyDataSetChanged();
