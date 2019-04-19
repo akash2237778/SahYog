@@ -58,12 +58,12 @@ public class LiveLocationActivity extends FragmentActivity implements OnMapReady
 
         latLong2 = new LatLng(Lat, Long);
 
-       // mMap2.clear();
-        mMap2.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)).position(latLong));
-        mMap2.moveCamera(CameraUpdateFactory.newLatLng(latLong));
+        //mMap2.clear();
+        mMap2.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)).position(latLong2));
+       // mMap2.moveCamera(CameraUpdateFactory.newLatLng(latLong));
 
         Log.i("info", Lat.toString());
-        Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+        /*  Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
         try {
             List<Address> addressList = geocoder.getFromLocation(Lat,Long,1);
             addressLine = addressList.get(0).getAddressLine(0);
@@ -73,12 +73,13 @@ public class LiveLocationActivity extends FragmentActivity implements OnMapReady
         } catch (IOException e) {
             e.printStackTrace();
         }
+        */
     }
 
     public void InfoUpdatetoServer(Location locationToSet) {
 
-        livetrackerObj.put("CurUsrName", ParseUser.getCurrentUser().getUsername());
-        livetrackerObj.put("RecipientUsrName", "Akash");
+        livetrackerObj.put("CurUsrName", "Akash");
+        livetrackerObj.put("RecipientUsrName", "Akanksha");
         livetrackerObj.put("LAT", locationToSet.getLatitude());
         livetrackerObj.put("LONG", locationToSet.getLongitude());
         ObjIdParseServer =  livetrackerObj.getObjectId();
@@ -155,12 +156,11 @@ public class LiveLocationActivity extends FragmentActivity implements OnMapReady
 
     public void UpdateLocationChangeInfoFromServer() {
 
-        final Double[] LAT = new Double[1];
 
         ParseQuery<ParseObject> queryForLocation = ParseQuery.getQuery("LiveLocation");
-        queryForLocation.whereEqualTo("CurUsrName", "Akansha");
-        queryForLocation.whereEqualTo("RecipientUsrName", ParseUser.getCurrentUser().getUsername());
-        queryForLocation.orderByDescending("createdAt");
+        queryForLocation.whereEqualTo("CurUsrName", "Akanksha");
+        queryForLocation.whereEqualTo("RecipientUsrName", "Akash");
+        //queryForLocation.orderByDescending("createdAt");
         queryForLocation.setLimit(1);
         //queryForLocation.whereEqualTo("objectId",ObjIdParseServer);
         queryForLocation.findInBackground(new FindCallback<ParseObject>() {
@@ -176,6 +176,8 @@ public class LiveLocationActivity extends FragmentActivity implements OnMapReady
                             Double LONG = (Double) UserInfo.getNumber("LONG");
                             Latitude[0] = LAT;
                             Longitude[0] = LONG;
+
+                            Log.i("Recipient" , UserInfo.getString("RecipientUsrName"));
 
                             blueMarkOnMap(Latitude[0] , Longitude[0]);
 
@@ -194,15 +196,11 @@ public class LiveLocationActivity extends FragmentActivity implements OnMapReady
         Latitude[0] = 30.454888;
         Log.i("Latitude" , Latitude[0].toString());
 
-
-
-    }
+  }
 
     public void UpdateLocationChangeInfo(Location location) {
         latLong = new LatLng(location.getLatitude(), location.getLongitude());
-       // mMap.clear();
-        mMap.addMarker(new MarkerOptions().position(latLong));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLong));
+       // mMap.moveCamera(CameraUpdateFactory.newLatLng(latLong));
 
         Log.i("info", location.toString());
         Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
@@ -218,6 +216,9 @@ public class LiveLocationActivity extends FragmentActivity implements OnMapReady
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        mMap.clear();
+        mMap.addMarker(new MarkerOptions().position(latLong));
 
 
     }
@@ -244,8 +245,8 @@ public class LiveLocationActivity extends FragmentActivity implements OnMapReady
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER , 5000 , 0 ,locationListener );
             Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             LatLng mylocation = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
-           // mMap.clear();
-            mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)).position(mylocation).title("My Location"));
+            mMap.clear();
+            mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)).position(mylocation).title("My Location"));
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mylocation, 15 ));
             Toast.makeText(LiveLocationActivity.this, "Updating Location........", Toast.LENGTH_LONG).show();
 
