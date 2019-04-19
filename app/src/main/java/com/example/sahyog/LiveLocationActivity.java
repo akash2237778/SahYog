@@ -111,7 +111,7 @@ public class LiveLocationActivity extends FragmentActivity implements OnMapReady
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 1000, locationListener);
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, locationListener);
 
             }
         }
@@ -132,7 +132,7 @@ public class LiveLocationActivity extends FragmentActivity implements OnMapReady
         ParseQuery<ParseObject> queryForUsername = ParseQuery.getQuery("ServiceProvider");
         queryForUsername.whereEqualTo("username" , ParseUser.getCurrentUser().getUsername() );
         queryForUsername.whereEqualTo("ConfirmStatus", 1 );
-        queryForUsername.orderByDescending("createdAt");
+        queryForUsername.orderByDescending("updatedAt");
         queryForUsername.setLimit(1);
         queryForUsername.findInBackground(new FindCallback<ParseObject>() {
             @Override
@@ -192,7 +192,7 @@ public class LiveLocationActivity extends FragmentActivity implements OnMapReady
         ParseQuery<ParseObject> queryForLocation = ParseQuery.getQuery("LiveLocation");
         queryForLocation.whereEqualTo("CurUsrName", RecipUsrName);
         queryForLocation.whereEqualTo("RecipientUsrName", ParseUser.getCurrentUser().getUsername());
-        //queryForLocation.orderByDescending("createdAt");
+        queryForLocation.orderByDescending("updatedAt");
         queryForLocation.setLimit(1);
         //queryForLocation.whereEqualTo("objectId",ObjIdParseServer);
         queryForLocation.findInBackground(new FindCallback<ParseObject>() {
