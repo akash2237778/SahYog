@@ -136,6 +136,7 @@ ArrayList<String> arrayListToStoreUserData = new ArrayList<>();
                     ImageStatusText = new int[SIZE];
 
 
+
                     if(objects.size()>0){
                         int i=0;
                         for(ParseObject UserInfo : objects){
