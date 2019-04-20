@@ -139,7 +139,7 @@ public class LiveLocationActivity extends FragmentActivity implements OnMapReady
             public void done(List<ParseObject> objects, ParseException e) {
                 if (e == null) {
                     if (objects.size() > 0) {
-                        int i = 0;
+                        //int i = 0;
                         for (ParseObject UserInfo : objects) {
                             String RUsrName = UserInfo.getString("ProviderUserName");
                             GetRecipientName(RUsrName);
