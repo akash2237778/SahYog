@@ -101,6 +101,7 @@ public class myProvideServices extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_provide_services);
+        setTitle("Services provided by you");
         pullToRefresh = (SwipeRefreshLayout) findViewById(R.id.swipeToRefresh3);
 
 

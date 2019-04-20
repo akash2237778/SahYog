@@ -108,7 +108,7 @@ ArrayList<String> arrayListToStoreUserData = new ArrayList<>();
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_act_nav_drawer);
-
+        setTitle("Required Services");
         pullToRefresh = (SwipeRefreshLayout) findViewById(R.id.swipeToRefresh2);
 
 

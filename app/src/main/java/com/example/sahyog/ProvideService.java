@@ -112,7 +112,7 @@ public class ProvideService extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_provide_service);
-
+setTitle("Fill Required Service Details");
         mapActivityIntent = new Intent(getApplicationContext(),MapsActivity.class);
 
 
