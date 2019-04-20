@@ -95,7 +95,7 @@ public class LiveLocationActivity extends FragmentActivity implements OnMapReady
             @Override
             public void done(ParseException e) {
                 if( e==null ){
-                    Toast.makeText(LiveLocationActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(LiveLocationActivity.this, "Successful", Toast.LENGTH_SHORT).show();
                     Log.i("Submit ","Successful");
                 }else{
                     Log.i("Submit ","unSuccessful :" + e.getMessage());
@@ -239,7 +239,7 @@ public class LiveLocationActivity extends FragmentActivity implements OnMapReady
         try {
             List<Address> addressList = geocoder.getFromLocation(location.getLatitude(),location.getLongitude(),1);
             addressLine = addressList.get(0).getAddressLine(0);
-            ToastMaker(addressLine);
+          // ToastMaker(addressLine);
             InfoUpdatetoServer(location);
 
 
