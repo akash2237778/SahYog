@@ -118,8 +118,9 @@ public class ProposalViewActivity extends AppCompatActivity {
             Intent intent;
 
             public void onClickLocation(View view) {
-                Toast.makeText(ProposalViewActivity.this, intent.getStringExtra("userNames"), Toast.LENGTH_SHORT).show();
+                startService(new Intent( ProposalViewActivity.this,LiveLocationActivity.class));
                 startActivity(mapDirIntent);
+
             }
 
 
