@@ -8,8 +8,8 @@
 
     <TextView
         android:id="@+id/statusViewPA"
-        android:layout_width="331dp"
-        android:layout_height="32dp"
+        android:layout_width="309dp"
+        android:layout_height="39dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="216dp"
@@ -20,27 +20,29 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.767"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.397" />
+        app:layout_constraintVertical_bias="0.393" />
 
     <ImageView
         android:id="@+id/statusImageViewPA"
-        android:layout_width="29dp"
+        android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_marginStart="18dp"
         android:layout_marginLeft="18dp"
-        android:layout_marginTop="216dp"
-        android:layout_marginEnd="364dp"
-        android:layout_marginRight="364dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="520dp"
+
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintEnd_toStartOf="@+id/statusViewPA"
+        app:layout_constraintHorizontal_bias="0.789"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.401"
+        app:layout_constraintVertical_bias="0.258"
+
         app:srcCompat="@drawable/bulebutton" />
 
     <Button
@@ -53,15 +55,17 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@android:color/holo_orange_dark"
+        android:background="@android:color/holo_orange_light"
+        android:fontFamily="@font/cantata_one"
         android:onClick="onClickLocation"
+
         android:text="Service Location"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.811" />
+        app:layout_constraintVertical_bias="0.44" />
 
     <Button
         android:id="@+id/btnChatAct"
@@ -73,15 +77,19 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@android:color/holo_purple"
+        android:background="@android:color/holo_blue_bright"
+        android:fontFamily="@font/cantata_one"
         android:onClick="callChat"
-        android:text="Call Chat Activity"
+
+        android:text="Chat "
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.71" />
+        app:layout_constraintVertical_bias="0.319" />
+
 
     <Button
         android:id="@+id/btnConfirm"
@@ -94,14 +102,15 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:background="#FFFF00"
+        android:fontFamily="@font/cantata_one"
         android:onClick="callConfirm"
         android:text="Confirm"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.943" />
 
     <Button
         android:id="@+id/LiveLocationButton"
@@ -113,7 +122,8 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@android:color/holo_orange_dark"
+        android:background="@android:color/holo_orange_light"
+        android:fontFamily="@font/cantata_one"
         android:onClick="OnclickLivelocation"
         android:text="Live Location"
         android:visibility="invisible"
@@ -122,7 +132,9 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.902" />
+
+        app:layout_constraintVertical_bias="0.572" />
+
 
     <Button
         android:id="@+id/CompleteServiceButton"
@@ -135,6 +147,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:background="@android:color/holo_green_light"
+        android:fontFamily="@font/cantata_one"
         android:onClick="OnclickCompleteService"
         android:text="Service Completed"
         android:visibility="invisible"
@@ -143,7 +156,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.917" />
 
     <TextView
         android:id="@+id/NameTextview"

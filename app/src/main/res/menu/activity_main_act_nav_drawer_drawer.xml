@@ -10,7 +10,7 @@
             android:title="Confirmed provided services" />
         <item
             android:id="@+id/menuitem_recieve"
-            android:icon="@drawable/location"
+            android:icon="@android:drawable/ic_menu_upload"
             android:title="My Uploads" />
 
         <item
