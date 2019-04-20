@@ -34,7 +34,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="536dp"
+        android:layout_marginBottom="520dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/statusViewPA"
         app:layout_constraintHorizontal_bias="0.789"
@@ -79,7 +79,7 @@
         android:fontFamily="@font/cantata_one"
         android:onClick="callChat"
 
-        android:text="Call Chat Activity"
+        android:text="Chat "
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
