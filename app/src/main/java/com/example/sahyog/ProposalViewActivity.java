@@ -36,7 +36,8 @@ public class ProposalViewActivity extends AppCompatActivity {
     TextView NameTextView;
     TextView PhoneTextView;
     TextView serviceTextView;
-
+    TextView TimeTextView;
+    TextView DateTextView;
 
     public void OnclickLivelocation(View view){
         startActivity(LiveLocationIntent);
@@ -143,6 +144,8 @@ public class ProposalViewActivity extends AppCompatActivity {
         NameTextView = findViewById(R.id.NameTextview);
         PhoneTextView = findViewById(R.id.phoneTextview);
         serviceTextView = findViewById(R.id.ServiceTextView);
+        DateTextView = findViewById(R.id.DateView);
+        TimeTextView = findViewById(R.id.TimeView);
 
         chatActIntent=new Intent(getApplicationContext(),ChatActivity.class);
         LiveLocationIntent = new Intent(getApplicationContext() , LiveLocationActivity.class);
@@ -190,9 +193,14 @@ public class ProposalViewActivity extends AppCompatActivity {
                         for(ParseObject UserInfo : objects){
                             String phoneNumber = UserInfo.getString("phone");
                             String Services = UserInfo.getString("service");
+                            String time = UserInfo.getString("Time");
+                            String date = UserInfo.getString("Date");
+
                             NameTextView.setText(activeUserName);
                             PhoneTextView.setText(phoneNumber);
                             serviceTextView.setText(Services);
+                            DateTextView.setText(time);
+                            TimeTextView.setText(date);
                         }
 
                     }
