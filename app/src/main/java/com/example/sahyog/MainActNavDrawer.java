@@ -48,6 +48,7 @@ public class MainActNavDrawer extends AppCompatActivity
     int SIZE;
     Intent intentMyProvideServices;
     Intent intentMyRecievedServices;
+    Intent intentMsgAct;
     int ConfrmStatus;
     SwipeRefreshLayout pullToRefresh;
 
@@ -114,6 +115,8 @@ ArrayList<String> arrayListToStoreUserData = new ArrayList<>();
 
             intentMyProvideServices = new Intent(getApplicationContext(),myProvideServices.class);
             intentMyRecievedServices = new Intent(getApplicationContext(),MyRecievedServices.class);
+            intentMsgAct = new Intent(getApplicationContext(),MessagesAct.class);
+
 
         proposalActivityIntent = new Intent(getApplicationContext(),ProposalViewActivity.class);
        // mapDirectionIntent = new Intent(getApplicationContext(),mapDirectionActivity.class);
@@ -320,7 +323,8 @@ ArrayList<String> arrayListToStoreUserData = new ArrayList<>();
 
         }
         else if (id == R.id.nav_share) {
-         //  Toast.makeText(MainActNavDrawer.this, "hiii", Toast.LENGTH_SHORT).show();
+            startActivity(intentMsgAct);
+          Toast.makeText(MainActNavDrawer.this, "hiii", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.nav_send) {
 
