@@ -54,7 +54,7 @@ public class ChatActivity extends AppCompatActivity {
 
                 if(e==null)
                 {
-                    msgs.add(messageContent);
+                    msgs.add(ParseUser.getCurrentUser().getUsername()+": "+messageContent);
                     arrayAdapter.notifyDataSetChanged();
 
                 }
