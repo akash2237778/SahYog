@@ -38,6 +38,7 @@ public class ProposalViewActivity extends AppCompatActivity {
     TextView serviceTextView;
     TextView TimeTextView;
     TextView DateTextView;
+    Button ChatActBTN;
 
     public void OnclickLivelocation(View view){
         startActivity(LiveLocationIntent);
@@ -146,6 +147,7 @@ public class ProposalViewActivity extends AppCompatActivity {
         serviceTextView = findViewById(R.id.ServiceTextView);
         DateTextView = findViewById(R.id.DateView);
         TimeTextView = findViewById(R.id.TimeView);
+        ChatActBTN =findViewById(R.id.btnChatAct);
 
         chatActIntent=new Intent(getApplicationContext(),ChatActivity.class);
         LiveLocationIntent = new Intent(getApplicationContext() , LiveLocationActivity.class);
@@ -169,6 +171,7 @@ public class ProposalViewActivity extends AppCompatActivity {
         Log.i("check " , "ParseUser" + activeUserName);
 
         if(ProviderUserName.equals(activeUserName)) {
+            ChatActBTN.setVisibility(View.INVISIBLE);
             btnCnfrm.setVisibility(View.INVISIBLE);
             serviceLocationBTN.setVisibility(View.INVISIBLE);
             if (Status != 2) {
