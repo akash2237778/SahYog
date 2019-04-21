@@ -6,7 +6,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/menuitem_provide"
-            android:icon="@drawable/service"
+            android:icon="@drawable/ic_menu_gallery"
             android:title="Confirmed provided services" />
         <item
             android:id="@+id/menuitem_recieve"
@@ -23,12 +23,12 @@
         <menu>
             <item
                 android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:icon="@drawable/ic_menu_send"
+                android:title="Messages" />
             <item
                 android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:icon="@drawable/ic_menu_share"
+                android:title="Share" />
         </menu>
     </item>
 
