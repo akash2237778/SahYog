@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -110,6 +112,8 @@ ArrayList<String> arrayListToStoreUserData = new ArrayList<>();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_act_nav_drawer);
         setTitle("Required Services");
+
+
         pullToRefresh = (SwipeRefreshLayout) findViewById(R.id.swipeToRefresh2);
 
 
@@ -325,7 +329,7 @@ ArrayList<String> arrayListToStoreUserData = new ArrayList<>();
         }
         else if (id == R.id.nav_share) {
             startActivity(intentMsgAct);
-          Toast.makeText(MainActNavDrawer.this, "hiii", Toast.LENGTH_SHORT).show();
+
 
         } else if (id == R.id.nav_send) {
 

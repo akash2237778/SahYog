@@ -86,7 +86,7 @@ public class myProvideServices extends AppCompatActivity {
         try {
             List<Address> addressList = geocoder.getFromLocation(Latitude,Longitude,1);
             addressLine2beStored = addressList.get(0).getAddressLine(0);
-            Toast.makeText(myProvideServices.this, addressLine2beStored , Toast.LENGTH_SHORT).show();
+         //   Toast.makeText(myProvideServices.this, addressLine2beStored , Toast.LENGTH_SHORT).show();
             return  addressLine2beStored;
 
         } catch (IOException e) {

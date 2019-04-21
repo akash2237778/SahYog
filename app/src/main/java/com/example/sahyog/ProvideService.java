@@ -36,23 +36,11 @@ import java.util.Locale;
 
 public class ProvideService extends AppCompatActivity {
     EditText ET_service;
-    EditText ET_range;
     EditText ET_maxweight;
     Intent mapActivityIntent;
     EditText DateView;
     EditText TimeView;
-    String Service_Date;
-    String Service_Time;
-
-//<<<<<<< akansha
-    String pro_username,pro_service, pro_peraddress, pro_curloc;
-    double pro_range,pro_maxweight;
-//=======
-
-    TextView textViewAddress;
-    String address = "Last Location";
-
-//>>>>>>> Dev_akash
+    EditText PhoneNumerEditText;
 
 
 
@@ -64,49 +52,14 @@ public class ProvideService extends AppCompatActivity {
         mapActivityIntent.putExtra("pro_maxweight",Double.parseDouble(ET_maxweight.getText().toString()));
         mapActivityIntent.putExtra("Time",TimeView.getText().toString());
        mapActivityIntent.putExtra("Date",DateView.getText().toString());
-
+        mapActivityIntent.putExtra("phoneNumber" , PhoneNumerEditText.getText().toString());
         startActivity(mapActivityIntent);
 
 
     }
 
 
-    public void proFormSubmit(View view)
-    {
-        pro_service = ET_service.getText().toString();
-        pro_range = Double.parseDouble(ET_range.getText().toString());
-        pro_maxweight = Double.parseDouble(ET_maxweight.getText().toString());
-        Service_Date = DateView.getText().toString();
-        Service_Time = TimeView.getText().toString();
 
-        ParseObject provider= new ParseObject("ServiceProvider");
-
-        pro_username= String.valueOf(ParseUser.getCurrentUser().getUsername());
-
-        provider.put("username",pro_username);
-        provider.put("service",pro_service);
-       // provider.put("ServiceRange",pro_range);
-        provider.put("Time",Service_Time);
-        provider.put("Date",Service_Date);
-        provider.put("ConfirmStatus",0);
-        provider.put("phone","8178232408");
-//<<<<<<< akansha
-        provider.put("MaximumWeight",pro_maxweight);
-    //
-//  provider.put("MaxWeight",pro_maxweight);
-//>>>>>>> Dev_akash
-        provider.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if( e==null ){
-                    Toast.makeText(ProvideService.this, "Successful", Toast.LENGTH_SHORT).show();
-                    Log.i("Submit ","Successful");
-                }else{
-                    Log.i("Submit ","unSuccessful :" + e.getMessage());
-                }
-            }
-        });
-    }
 
 
     @Override
@@ -121,6 +74,7 @@ setTitle("Fill Required Service Details");
 
 
          ET_service=findViewById(R.id.txtservice);
+        PhoneNumerEditText = findViewById(R.id.PhoneNumerEditText);
 
 //<<<<<<< akansha
 
