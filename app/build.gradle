@@ -31,6 +31,7 @@ dependencies {
 
     // Don't forget to change the line below with the latest version of Parse SDK for Android
     implementation "com.github.parse-community.Parse-SDK-Android:parse:1.18.5"
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
     //implementation "com.github.parse-community.Parse-SDK-Android:parse:latest.version.here"
 }
 repositories {

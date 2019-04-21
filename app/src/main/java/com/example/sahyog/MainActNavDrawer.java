@@ -48,6 +48,7 @@ public class MainActNavDrawer extends AppCompatActivity
     int SIZE;
     Intent intentMyProvideServices;
     Intent intentMyRecievedServices;
+    Intent intentMsgAct;
     int ConfrmStatus;
     SwipeRefreshLayout pullToRefresh;
 
@@ -108,12 +109,14 @@ ArrayList<String> arrayListToStoreUserData = new ArrayList<>();
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_act_nav_drawer);
-
+        setTitle("Required Services");
         pullToRefresh = (SwipeRefreshLayout) findViewById(R.id.swipeToRefresh2);
 
 
             intentMyProvideServices = new Intent(getApplicationContext(),myProvideServices.class);
             intentMyRecievedServices = new Intent(getApplicationContext(),MyRecievedServices.class);
+            intentMsgAct = new Intent(getApplicationContext(),MessagesAct.class);
+
 
         proposalActivityIntent = new Intent(getApplicationContext(),ProposalViewActivity.class);
        // mapDirectionIntent = new Intent(getApplicationContext(),mapDirectionActivity.class);
@@ -134,6 +137,7 @@ ArrayList<String> arrayListToStoreUserData = new ArrayList<>();
                     ObjectId = new String[SIZE];
                     StatusText = new String[SIZE];
                     ImageStatusText = new int[SIZE];
+
 
 
                     if(objects.size()>0){
@@ -320,7 +324,8 @@ ArrayList<String> arrayListToStoreUserData = new ArrayList<>();
 
         }
         else if (id == R.id.nav_share) {
-         //  Toast.makeText(MainActNavDrawer.this, "hiii", Toast.LENGTH_SHORT).show();
+            startActivity(intentMsgAct);
+          Toast.makeText(MainActNavDrawer.this, "hiii", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.nav_send) {
 

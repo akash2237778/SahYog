@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -42,6 +43,8 @@ public class myProvideServices extends AppCompatActivity {
     Double[] LongitudeArr;
     int SIZE;
     int ConfrmStatus;
+    SwipeRefreshLayout pullToRefresh;
+
 
     ArrayList<String> arrayListToStoreUserData = new ArrayList<>();
 //ArrayAdapter arrayAdapterForStoreUserData;
@@ -98,6 +101,8 @@ public class myProvideServices extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_provide_services);
+        setTitle("Services provided by you");
+        pullToRefresh = (SwipeRefreshLayout) findViewById(R.id.swipeToRefresh3);
 
 
         proposalActivityIntent = new Intent(getApplicationContext(), ProposalViewActivity.class);
@@ -165,6 +170,8 @@ public class myProvideServices extends AppCompatActivity {
                         proposalActivityIntent.putExtra("lat", LatitudeArr[position]);
                         proposalActivityIntent.putExtra("long", LongitudeArr[position]);
                         proposalActivityIntent.putExtra("ObjectId", ObjectId[position]);
+                        proposalActivityIntent.putExtra("Status" , ImageStatusText[position]);
+
 
                         //mapDirectionIntent.putExtra("userNames",names[position]);
                         startActivity(proposalActivityIntent);
@@ -178,6 +185,61 @@ public class myProvideServices extends AppCompatActivity {
                 })
         );
 
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                ParseQuery<ParseObject> queryForUsername = ParseQuery.getQuery("ServiceProvider");
+                queryForUsername.whereEqualTo("ProviderUserName" , ParseUser.getCurrentUser().getUsername() );
+                queryForUsername.orderByDescending("createdAt");
+                queryForUsername.findInBackground(new FindCallback<ParseObject>() {
+                    @Override
+                    public void done(List<ParseObject> objects, ParseException e) {
+                        if (e == null) {
+                            SIZE = objects.size();
+                            LatitudeArr = new Double[SIZE];
+                            LongitudeArr = new Double[SIZE];
+                            names = new String[SIZE];
+                            userServiceArr = new String[SIZE];
+                            userCurAddressArr = new String[SIZE];
+                            ObjectId = new String[SIZE];
+                            StatusText = new String[SIZE];
+                            ImageStatusText = new int[SIZE];
+
+
+                            if(objects.size()>0){
+                                int i=0;
+                                for(ParseObject UserInfo : objects){
+                                    String userName = UserInfo.getString("username");
+                                    String userService = UserInfo.getString("service");
+                                    ConfrmStatus = UserInfo.getInt("ConfirmStatus");
+                                    Latitude = UserInfo.getDouble("LocationLAT");
+                                    Longitude = UserInfo.getDouble("LocationLONG");
+                                    String ObjectID = UserInfo.getObjectId();
+                                    Log.i("ParseInfo :" , userService + String.valueOf(Latitude));
+                                    StatusText[i] = StatusTextViewSetter(ConfrmStatus);
+                                    ImageStatusText[i] = ConfrmStatus;
+                                    userServiceArr[i] = userService;
+                                    userCurAddressArr[i] = GeocoderProg(Latitude,Longitude);
+                                    LatitudeArr[i]=Latitude;
+                                    LongitudeArr[i] = Longitude;
+                                    ObjectId[i] = ObjectID;
+
+                                    names[i] = userName;
+
+                                    i++;
+                                    recyclerView.setAdapter(new AdapterProgram(names , userServiceArr , userCurAddressArr , StatusText, ImageStatusText));
+
+                                }
+
+                            }
+                        }
+                    }
+                });
+
+                pullToRefresh.setRefreshing(false);
+
+            }
+        });
 
     }
 

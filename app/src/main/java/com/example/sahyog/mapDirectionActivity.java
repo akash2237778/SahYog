@@ -72,6 +72,7 @@ public class mapDirectionActivity extends FragmentActivity implements OnMapReady
 
         mMap.addMarker(new MarkerOptions().position(latLong));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLong));
+       /*
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
@@ -90,7 +91,9 @@ public class mapDirectionActivity extends FragmentActivity implements OnMapReady
                 }
 
             }
+
         });
+        */
         Log.i("info", location.toString());
         Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
         try {
