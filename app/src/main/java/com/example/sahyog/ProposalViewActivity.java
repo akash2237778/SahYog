@@ -29,6 +29,20 @@ public class ProposalViewActivity extends AppCompatActivity {
     TextView statusTextView;
     Button btnCnfrm;
     String activeUserName;
+    Intent LiveLocationIntent;
+    Button LiveLocationBTN;
+    Button completeServiceBTN;
+    Button serviceLocationBTN;
+    TextView NameTextView;
+    TextView PhoneTextView;
+    TextView serviceTextView;
+    TextView TimeTextView;
+    TextView DateTextView;
+
+    public void OnclickLivelocation(View view){
+        startActivity(LiveLocationIntent);
+    }
+
 
     public void StatusTextViewSetter(int a){
         String statusString;
@@ -42,10 +56,14 @@ public class ProposalViewActivity extends AppCompatActivity {
             statusString = "Status : Confirmed";
             statusImageView.setImageResource(R.drawable.yellowbutton);
             btnCnfrm.setVisibility(View.INVISIBLE);
+            LiveLocationBTN.setVisibility(View.VISIBLE);
+            if(ProviderUserName.equals(ParseUser.getCurrentUser().getUsername())){
+            PhoneTextView.setVisibility(View.VISIBLE);}
         }else if(a==2){
             statusString = "Status : Completed";
             statusImageView.setImageResource(R.drawable.greenbutton);
             btnCnfrm.setVisibility(View.INVISIBLE);
+            //completeServiceBTN.setVisibility(View.INVISIBLE);
         }else{
             statusString = "Status : ERROR";
         }
@@ -76,26 +94,61 @@ public class ProposalViewActivity extends AppCompatActivity {
                                    }
 
     });
+       btnCnfrm.setAlpha(0);
+       statusTextView.setText("Status : Confirmed");
+       statusImageView.setImageResource(R.drawable.yellowbutton);
 
+       if(ProviderUserName.equals(ParseUser.getCurrentUser().getUsername())){
+           PhoneTextView.setVisibility(View.VISIBLE);}
    }
-    Intent mapDirIntent;
-    Intent intent;
+    public void OnclickCompleteService(View view){
+        ParseQuery<ParseObject> query=ParseQuery.getQuery("ServiceProvider");
+        query.getInBackground(objid,new GetCallback<ParseObject>() {
+                    @Override
+                    public void done(ParseObject object, ParseException e) {
+                        if (e == null && object != null) {
+                            object.put("ProviderUserName", ProviderUserName);
+                            object.put("ConfirmStatus", 2);
+                            object.saveInBackground();
 
-    public void onClickLocation(View view){
-        Toast.makeText(ProposalViewActivity.this, intent.getStringExtra("userNames"), Toast.LENGTH_SHORT).show();
-        startActivity(mapDirIntent);
-         }
+                        }
+                    }
+        });
+                completeServiceBTN.setAlpha(0);
+        statusTextView.setText("Status : Completed");
+        statusImageView.setImageResource(R.drawable.greenbutton);
+    }
+
+
+            Intent mapDirIntent;
+            Intent intent;
+
+            public void onClickLocation(View view) {
+                startService(new Intent( ProposalViewActivity.this,LiveLocationActivity.class));
+                startActivity(mapDirIntent);
+
+            }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_proposal_view);
 
+        LiveLocationBTN = findViewById(R.id.LiveLocationButton);
+        completeServiceBTN = findViewById(R.id.CompleteServiceButton);
+        serviceLocationBTN = findViewById(R.id.ServicelocationBTN);
         statusImageView = findViewById(R.id.statusImageViewPA);
         statusTextView = findViewById(R.id.statusViewPA);
         btnCnfrm = findViewById(R.id.btnConfirm);
+        NameTextView = findViewById(R.id.NameTextview);
+        PhoneTextView = findViewById(R.id.phoneTextview);
+        serviceTextView = findViewById(R.id.ServiceTextView);
+        DateTextView = findViewById(R.id.DateView);
+        TimeTextView = findViewById(R.id.TimeView);
 
         chatActIntent=new Intent(getApplicationContext(),ChatActivity.class);
+        LiveLocationIntent = new Intent(getApplicationContext() , LiveLocationActivity.class);
 
         intent = getIntent();
         mapDirIntent = new Intent(getApplicationContext(),mapDirectionActivity.class);
@@ -113,11 +166,47 @@ public class ProposalViewActivity extends AppCompatActivity {
         mapDirIntent.putExtra("long", intent.getDoubleExtra("long",30.11));
 
         StatusTextViewSetter(Status);
+        Log.i("check " , "ParseUser" + activeUserName);
 
-        if(ProviderUserName.equals(activeUserName)){
+        if(ProviderUserName.equals(activeUserName)) {
             btnCnfrm.setVisibility(View.INVISIBLE);
+            serviceLocationBTN.setVisibility(View.INVISIBLE);
+            if (Status != 2) {
+                completeServiceBTN.setVisibility(View.VISIBLE);
+            }
         }
 
 //initialCommentForBranchAkash_Saini
+
+
+
+
+        ParseQuery<ParseObject> queryForUsername = ParseQuery.getQuery("ServiceProvider");
+       queryForUsername.whereEqualTo("username" , activeUserName );
+        queryForUsername.setLimit(1);
+        queryForUsername.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if(e == null){
+                    if(objects.size()>0){
+                        int i=0;
+                        for(ParseObject UserInfo : objects){
+                            String phoneNumber = UserInfo.getString("phone");
+                            String Services = UserInfo.getString("service");
+                            String time = UserInfo.getString("Time");
+                            String date = UserInfo.getString("Date");
+
+                            NameTextView.setText(activeUserName);
+                            PhoneTextView.setText(phoneNumber);
+                            serviceTextView.setText(Services);
+                            DateTextView.setText(time);
+                            TimeTextView.setText(date);
+                        }
+
+                    }
+                }
+            }
+        });
+
     }
 }

@@ -4,14 +4,11 @@
     android:id="@+id/swipeToRefresh2"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="60dp"
     tools:ignore="MissingConstraints">
 
-    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/RecyclerView"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/MsgRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="60dp"
-        tools:listitem="@layout/recycler_view_item"></android.support.v7.widget.RecyclerView>
+        tools:listitem="@layout/msg_recycler_view_item"></android.support.v7.widget.RecyclerView>
 </android.support.v4.widget.SwipeRefreshLayout>

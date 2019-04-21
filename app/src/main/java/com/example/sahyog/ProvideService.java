@@ -89,6 +89,7 @@ public class ProvideService extends AppCompatActivity {
         provider.put("Time",Service_Time);
         provider.put("Date",Service_Date);
         provider.put("ConfirmStatus",0);
+        provider.put("phone","8178232408");
 //<<<<<<< akansha
         provider.put("MaximumWeight",pro_maxweight);
     //
@@ -112,7 +113,7 @@ public class ProvideService extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_provide_service);
-
+setTitle("Fill Required Service Details");
         mapActivityIntent = new Intent(getApplicationContext(),MapsActivity.class);
 
 
