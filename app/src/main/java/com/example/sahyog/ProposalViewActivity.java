@@ -186,6 +186,7 @@ public class ProposalViewActivity extends AppCompatActivity {
 
         ParseQuery<ParseObject> queryForUsername = ParseQuery.getQuery("ServiceProvider");
        queryForUsername.whereEqualTo("username" , activeUserName );
+        queryForUsername.orderByDescending("createdAt");
         queryForUsername.setLimit(1);
         queryForUsername.findInBackground(new FindCallback<ParseObject>() {
             @Override

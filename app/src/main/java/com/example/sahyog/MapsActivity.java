@@ -58,6 +58,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Intent mapActivityIntent;
     String Service_Date;
     String Service_Time;
+    String phoneNumber;
 
 
 
@@ -74,6 +75,8 @@ Log.i("parseINfo " , pro_service + pro_range + pro_maxweight + pro_username);
        provider.put("MaximumWeight", 9 );
         provider.put("Time",Service_Time);
         provider.put("Date",Service_Date);
+        provider.put("ConfirmStatus",0);
+        provider.put("phone",phoneNumber);
        provider.put("LocationLONG", latLngToBeStored.longitude );
         provider.put("LocationLAT", latLngToBeStored.latitude );
 
@@ -180,6 +183,7 @@ Log.i("parseINfo " , pro_service + pro_range + pro_maxweight + pro_username);
         pro_username= String.valueOf(ParseUser.getCurrentUser().getUsername());
         Service_Date = mapActivityIntent.getStringExtra("Date");
         Service_Time = mapActivityIntent.getStringExtra("Time");
+        phoneNumber = mapActivityIntent.getStringExtra("phoneNumber");
 
         FormCallbackIntent = new Intent(getApplicationContext(),ProvideService.class);
 
