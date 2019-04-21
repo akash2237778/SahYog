@@ -46,9 +46,9 @@ user.put("phone",phoneNo);
         @Override
         public void done(ParseException e) {
             if( e==null ){
-               Log.i("SignUp ","Successful");
+                Toast.makeText(MainActivity.this, "Sign Up : Succesful", Toast.LENGTH_SHORT).show();
             }else{
-                Log.i("SignUp ","unSuccessful :" + e.getMessage());
+                Toast.makeText(MainActivity.this, "SignUp : unSuccessful :" + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
     });
