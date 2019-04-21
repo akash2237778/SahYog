@@ -26,7 +26,7 @@ public class AdapterMsg extends RecyclerView.Adapter<AdapterMsg.MsgProgramViewHo
     @Override
     public AdapterMsg.MsgProgramViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        View view = inflater.inflate(R.layout.recycler_view_item,viewGroup,false);
+        View view = inflater.inflate(R.layout.msg_recycler_view_item,viewGroup,false);
 
         return new AdapterMsg.MsgProgramViewHolder(view);
     }

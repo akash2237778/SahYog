@@ -20,7 +20,9 @@ import com.parse.ParseUser;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 
@@ -41,6 +43,7 @@ public class MessagesAct extends AppCompatActivity {
     //String[] recnames;
     String[] ObjectId;
     //String[] dateArr;
+    String[] finalString = new String[5];
 
 
 
@@ -60,6 +63,7 @@ public class MessagesAct extends AppCompatActivity {
          queryForUsername.findInBackground(new FindCallback<ParseObject>() {
              @Override
              public void done(List<ParseObject> objects, ParseException e) {
+
                  if (e == null) {
                      SIZE = objects.size();
                      sendernames = new String[SIZE];
@@ -80,29 +84,14 @@ public class MessagesAct extends AppCompatActivity {
                              //          dateArr[i]=strDate;
 
                              sendernames[i] = senderName;
-
+                            i++;
                          }
-                         int k,j=0,count=0;
-                         for(k=0;k<SIZE;k++)
-                         {
-                             if(sendernames[k]==sendernames[k+1])
-                             {k++;}
-                             else
-                             {count++;}
-                         }
+                         LinkedHashSet<String> linkedHashSet = new LinkedHashSet<>( Arrays.asList(sendernames) );
 
-                         j=0;finalsendernames=new String[count];
-                         for(k=0;k<SIZE;k++)
-                         {
-                             if(sendernames[k]==sendernames[k+1])
-                             {k++;}
-                             else
-                             {finalsendernames[j]=sendernames[k];j++;
-                                 recyclerView.setAdapter(new AdapterMsg(finalsendernames ));
-                             }
-                         }
+                         //Get back the array without duplicates
+                         finalString = linkedHashSet.toArray(new String[] {});
 
-
+                         recyclerView.setAdapter(new AdapterMsg(finalString ));
                      }
                  }
              }
@@ -139,7 +128,7 @@ public class MessagesAct extends AppCompatActivity {
                 new RecyclerItemClickListener(getApplicationContext(), recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        chatActivityIntent.putExtra("userName", finalsendernames[position]);
+                        chatActivityIntent.putExtra("userName", finalString[position]);
                        //chatActivityIntent.putExtra("recipient", recnames[position]);
                         startActivity(chatActivityIntent);
 
@@ -162,6 +151,7 @@ public class MessagesAct extends AppCompatActivity {
                 queryForUsername.findInBackground(new FindCallback<ParseObject>() {
                     @Override
                     public void done(List<ParseObject> objects, ParseException e) {
+                        String[] finalString = new String[5];
                         if (e == null) {
                             SIZE = objects.size();
                             sendernames = new String[SIZE];
@@ -182,33 +172,21 @@ public class MessagesAct extends AppCompatActivity {
                           //          dateArr[i]=strDate;
 
                                     sendernames[i] = senderName;
+                                    i++;
 
                                 }
-                                int k,j=0,count=0;
-                                for(k=0;k<SIZE;k++)
-                                {
-                                    if(sendernames[k]==sendernames[k+1])
-                                    {k++;}
-                                    else
-                                    {count++;}
-                                }
+                                LinkedHashSet<String> linkedHashSet = new LinkedHashSet<>( Arrays.asList(sendernames) );
 
-                                j=0;finalsendernames=new String[count];
-                                for(k=0;k<SIZE;k++)
-                                {
-                                    if(sendernames[k]==sendernames[k+1])
-                                    {k++;}
-                                    else
-                                    {finalsendernames[j]=sendernames[k];j++;
-                                        recyclerView.setAdapter(new AdapterMsg(finalsendernames ));
-                                    }
-                                }
+                                //Get back the array without duplicates
+                                finalString = linkedHashSet.toArray(new String[] {});
 
-
+                                recyclerView.setAdapter(new AdapterMsg(finalString ));
                             }
                         }
                     }
                 });
+
+
 
 /*                int k,j=0,count=0;
                 for(k=0;k<SIZE;k++)
